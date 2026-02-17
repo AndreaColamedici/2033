@@ -1089,6 +1089,12 @@ footer {
   text-transform: uppercase;
   color: var(--gray);
   opacity: 0.6;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.footer-logo:hover {
+  opacity: 1;
+  color: var(--accent);
 }
 .footer-copy {
   font-size: 0.75rem;
@@ -1976,11 +1982,9 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-logos">
-    <span class="footer-logo">il POD</span>
-    <span class="footer-logo">Festival del Pensare Contemporaneo</span>
-    <span class="footer-logo">Comune di Piacenza</span>
-    <span class="footer-logo">Fondazione Teatri di Piacenza</span>
-    <span class="footer-logo">Tlon</span>
+    <a href="https://ilpod.it" target="_blank" rel="noopener" class="footer-logo">il POD</a>
+    <a href="https://festivaldelpensarecontemporaneo.it" target="_blank" rel="noopener" class="footer-logo">Festival del Pensare Contemporaneo</a>
+    <a href="https://tlon.it" target="_blank" rel="noopener" class="footer-logo">Tlon</a>
   </div>
   <p class="footer-copy">© 2026 Piacenza Podcast Academy — Italian Podcast Awards — il POD</p>
 </footer>
