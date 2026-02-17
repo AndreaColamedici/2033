@@ -423,6 +423,106 @@ section { padding: 8rem 3rem; position: relative; }
   font-weight: 300;
 }
 
+/* FORMATORI */
+.formatori-section {
+  padding: 6rem 2rem;
+  background: var(--black);
+  position: relative;
+}
+.formatori-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.formatori-highlight {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 2.5rem;
+  border: 1px solid rgba(255,77,0,0.2);
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(255,77,0,0.05), rgba(108,92,231,0.05));
+  position: relative;
+  overflow: hidden;
+}
+.formatori-highlight::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+}
+.formatori-highlight p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: rgba(245,245,240,0.9);
+  max-width: 800px;
+  margin: 0 auto;
+}
+.formatori-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.formatore-card {
+  background: var(--dark-gray);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.formatore-card:hover {
+  border-color: rgba(255,77,0,0.3);
+  transform: translateY(-4px);
+}
+.formatore-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.formatore-card:hover::before { opacity: 1; }
+.formatore-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.formatore-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.formatore-card .formatore-role {
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.formatore-card p.formatore-bio {
+  color: var(--gray);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
 /* TIMELINE */
 .timeline-section { background: var(--dark-gray); }
 .timeline {
@@ -1187,6 +1287,45 @@ footer {
         <span class="learn-icon">📡</span>
         <h3>Reportage live</h3>
         <p>Produrre contenuti in tempo reale durante il Festival. Interviste, restituzioni quotidiane, racconti delle giornate: giornalismo culturale sul campo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATORI -->
+<section class="formatori-section" id="formatori">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label">Chi ti guiderà</div>
+      <h2 class="section-title">Imparerai da chi il podcasting lo vive ogni giorno</h2>
+    </div>
+    <div class="formatori-highlight reveal">
+      <p>La formazione dell'Academy è affidata a professioniste e professionisti che hanno contribuito a definire il panorama del podcasting italiano: voci che hanno prodotto serie per i principali editori, raccontato il mondo da zone di crisi, esplorato il pensiero contemporaneo attraverso l'audio, costruito format originali premiati a livello nazionale.</p>
+    </div>
+    <div class="formatori-grid">
+      <div class="formatore-card reveal">
+        <div class="formatore-icon">🎧</div>
+        <h3>Rossella Pivanti</h3>
+        <div class="formatore-role">Podcast Producer & Strategist</div>
+        <p class="formatore-bio">Tra le più importanti produttrici di podcast in Italia, con oltre quaranta serie realizzate dal 2017 per i principali brand. Trainer Spotify e autrice di "Branded Podcast Producer".</p>
+      </div>
+      <div class="formatore-card reveal">
+        <div class="formatore-icon">📡</div>
+        <h3>Valerio Nicolosi</h3>
+        <div class="formatore-role">Giornalista & Reporter</div>
+        <p class="formatore-bio">Reporter di guerra e inviato speciale, conduce il podcast quotidiano "Scanner" su Fanpage. Le sue inchieste sono state pubblicate da The Guardian, Financial Times e Corriere della Sera.</p>
+      </div>
+      <div class="formatore-card reveal">
+        <div class="formatore-icon">💡</div>
+        <h3>Maura Gancitano</h3>
+        <div class="formatore-role">Filosofa & Autrice</div>
+        <p class="formatore-bio">Filosofa, cofondatrice di Tlon. Autrice di numerosi saggi tra cui "Specchio delle mie brame" (Premio Rapallo), cura la rubrica "Prendila con Filosofia" su Vanity Fair.</p>
+      </div>
+      <div class="formatore-card reveal">
+        <div class="formatore-icon">🎛️</div>
+        <h3>Fabio Ragazzo</h3>
+        <div class="formatore-role">Podcast Producer & Autore</div>
+        <p class="formatore-bio">Produttore e autore di podcast, ha creato la serie Supercrash ed è direttore artistico degli Italian Podcast Awards — il POD. Docente e consulente per la produzione audio.</p>
       </div>
     </div>
   </div>
