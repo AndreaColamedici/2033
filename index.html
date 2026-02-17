@@ -2335,9 +2335,32 @@ window.addEventListener('scroll', () => {
 });
 
 // ===== TEXT REVEAL ON SCROLL — WORD BY WORD =====
+function wrapTextNodes(node) {
+  const children = Array.from(node.childNodes);
+  children.forEach(child => {
+    if (child.nodeType === 3) {
+      const text = child.textContent;
+      if (!text.trim()) return;
+      const frag = document.createDocumentFragment();
+      text.split(/(\s+)/).forEach(part => {
+        if (!part.trim()) {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'scramble-text';
+          span.style.cssText = 'opacity:0;transform:translateY(8px);transition:all 0.3s ease;display:inline-block;';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      child.replaceWith(frag);
+    } else if (child.nodeType === 1 && child.tagName !== 'SPAN') {
+      wrapTextNodes(child);
+    }
+  });
+}
 document.querySelectorAll('.section-text').forEach(el => {
-  const words = el.textContent.split(' ');
-  el.innerHTML = words.map(w => `<span class="scramble-text" style="opacity:0;transform:translateY(8px);transition:all 0.3s ease;display:inline-block;">${w}</span>`).join(' ');
+  el.querySelectorAll('p').forEach(p => wrapTextNodes(p));
   const wordObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
