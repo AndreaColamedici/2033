@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piacenza Podcast Academy — il POD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f5f0;
+  --accent: #ff4d00;
+  --accent2: #00e5a0;
+  --accent3: #6c5ce7;
+  --gray: #888;
+  --dark-gray: #1a1a1a;
+  --mid-gray: #2a2a2a;
+  --error: #ff4757;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--black);
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* CUSTOM CURSOR */
+.cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+  transform: translate(-50%, -50%);
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,10,0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.4s ease;
+}
+nav.hidden { transform: translateY(-100%); }
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--accent) !important;
+  color: var(--black) !important;
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: 600 !important;
+  transition: transform 0.3s, box-shadow 0.3s !important;
+}
+.nav-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255,77,0,0.4);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6rem 2rem 4rem;
+  overflow: hidden;
+}
+.waveform-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  opacity: 0.12;
+}
+.float-icons {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.float-icon {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.07;
+  animation: floatUp 20s linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.07; }
+  90% { opacity: 0.07; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 1000px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  border: 1px solid rgba(255,77,0,0.3);
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease 0.2s both;
+  font-family: 'Space Mono', monospace;
+}
+.hero-badge .pulse {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+.hero h1 .line { display: block; }
+.hero h1 .outline {
+  -webkit-text-stroke: 1.5px var(--white);
+  color: transparent;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--gray);
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+  animation: fadeInUp 1s ease 0.6s both;
+  line-height: 1.7;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.8s both;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  background: var(--accent);
+  color: var(--black);
+  text-decoration: none;
+  border-radius: 3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(255,77,0,0.3);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 3rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  border-color: var(--white);
+  background: rgba(255,255,255,0.05);
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInUp 1s ease 1.2s both;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+.scroll-text {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gray);
+  font-family: 'Space Mono', monospace;
+}
+
+/* MARQUEE */
+.marquee-section {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+  background: var(--dark-gray);
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+.marquee-track span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0 2rem;
+  color: var(--gray);
+}
+.marquee-track span .dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 1.5rem;
+  vertical-align: middle;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* SECTIONS */
+section { padding: 8rem 3rem; position: relative; }
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--accent);
+}
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+.section-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(245,245,240,0.7);
+  max-width: 700px;
+  font-weight: 300;
+}
+
+/* ABOUT */
+.about-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+.about-visual {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 200px;
+}
+.eq-bar {
+  width: 6px;
+  background: linear-gradient(to top, var(--accent), var(--accent2));
+  border-radius: 3px;
+  animation: eqBounce 1.5s ease-in-out infinite;
+}
+@keyframes eqBounce {
+  0%, 100% { height: 20%; }
+  50% { height: 100%; }
+}
+
+/* LEARN GRID */
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+}
+.learn-card {
+  background: var(--dark-gray);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.learn-card:hover {
+  border-color: rgba(255,77,0,0.3);
+  transform: translateY(-4px);
+}
+.learn-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.learn-card:hover::before { opacity: 1; }
+.learn-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.learn-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.learn-card p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* TIMELINE */
+.timeline-section { background: var(--dark-gray); }
+.timeline {
+  max-width: 900px;
+  margin: 4rem auto 0;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+}
+.timeline-item {
+  padding-left: 80px;
+  margin-bottom: 4rem;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.6s ease;
+}
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.timeline-dot {
+  position: absolute;
+  left: 20px;
+  top: 5px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--dark-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline-dot::after {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.timeline-item:nth-child(2) .timeline-dot { border-color: var(--accent2); }
+.timeline-item:nth-child(2) .timeline-dot::after { background: var(--accent2); }
+.timeline-item:nth-child(3) .timeline-dot { border-color: var(--accent3); }
+.timeline-item:nth-child(3) .timeline-dot::after { background: var(--accent3); }
+.timeline-phase {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.timeline-phase.phase1 { color: var(--accent); }
+.timeline-phase.phase2 { color: var(--accent2); }
+.timeline-phase.phase3 { color: var(--accent3); }
+.timeline-date {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.timeline-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.timeline-desc {
+  color: var(--gray);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* SELECTION CRITERIA */
+.selection-section {
+  background: linear-gradient(180deg, var(--black) 0%, rgba(108,92,231,0.06) 100%);
+}
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 3rem auto 0;
+}
+.criterion {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02);
+  transition: all 0.4s ease;
+}
+.criterion:hover {
+  border-color: rgba(108,92,231,0.3);
+  background: rgba(108,92,231,0.05);
+}
+.criterion-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent3);
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+.criterion h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.criterion p {
+  color: var(--gray);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* FESTIVAL */
+.festival-section {
+  background: linear-gradient(135deg, rgba(255,77,0,0.08), rgba(0,229,160,0.05));
+  position: relative;
+}
+.festival-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.festival-highlight {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  color: rgba(245,245,240,0.9);
+}
+.festival-highlight strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+.festival-stats {
+  display: flex;
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+.stat { text-align: left; }
+.stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat:nth-child(1) .stat-number { color: var(--accent); }
+.stat:nth-child(2) .stat-number { color: var(--accent2); }
+.stat:nth-child(3) .stat-number { color: var(--accent3); }
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ======================== */
+/* FORM SECTION             */
+/* ======================== */
+.form-section {
+  background: var(--dark-gray);
+  padding: 8rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.form-section::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,77,0,0.06), transparent 70%);
+  border-radius: 50%;
+}
+.form-container {
+  max-width: 740px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Track selector */
+.track-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+.track-option {
+  padding: 2rem;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+}
+.track-option:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.04);
+}
+.track-option.active {
+  border-color: var(--accent);
+  background: rgba(255,77,0,0.06);
+}
+.track-option.active::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+.track-option .track-icon {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.track-option h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.track-option p {
+  color: var(--gray);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Progress bar */
+.form-progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 3rem;
+}
+.progress-step {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  position: relative;
+  transition: background 0.5s ease;
+}
+.progress-step.active {
+  background: var(--accent);
+}
+.progress-step.completed {
+  background: var(--accent2);
+}
+.progress-step::before {
+  content: attr(data-step);
+  position: absolute;
+  top: -28px;
+  left: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color 0.3s;
+}
+.progress-step.active::before,
+.progress-step.completed::before { color: var(--white); }
+
+/* Form steps */
+.form-step {
+  display: none;
+  animation: fadeInUp 0.5s ease;
+}
+.form-step.active { display: block; }
+.form-step-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.form-step-sub {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* Form fields */
+.field {
+  margin-bottom: 1.5rem;
+}
+.field label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  color: rgba(245,245,240,0.8);
+}
+.field label .required {
+  color: var(--accent);
+  margin-left: 2px;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 0.7rem;
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  background: rgba(255,77,0,0.04);
+  box-shadow: 0 0 0 3px rgba(255,77,0,0.08);
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+.field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+.field select option {
+  background: var(--dark-gray);
+  color: var(--white);
+}
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.char-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gray);
+  text-align: right;
+  margin-top: 0.3rem;
+}
+.char-count.over { color: var(--error); }
+
+/* Radio / Checkbox groups */
+.radio-group, .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.3rem;
+}
+.radio-option, .checkbox-option {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  user-select: none;
+  font-weight: 400;
+}
+.radio-option:hover, .checkbox-option:hover {
+  border-color: rgba(255,255,255,0.25);
+}
+.radio-option.selected {
+  border-color: var(--accent);
+  background: rgba(255,77,0,0.1);
+  color: var(--accent);
+  font-weight: 500;
+}
+.checkbox-option.selected {
+  border-color: var(--accent2);
+  background: rgba(0,229,160,0.1);
+  color: var(--accent2);
+  font-weight: 500;
+}
+
+/* Conditional field */
+.conditional { display: none; margin-top: 1rem; }
+.conditional.show { display: block; animation: fadeInUp 0.3s ease; }
+
+/* Form nav buttons */
+.form-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  color: var(--gray);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.3s;
+}
+.btn-back:hover {
+  color: var(--white);
+  border-color: rgba(255,255,255,0.3);
+}
+.btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.3s;
+}
+.btn-next:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(255,77,0,0.3);
+}
+.btn-submit {
+  background: var(--accent2);
+}
+.btn-submit:hover {
+  box-shadow: 0 6px 25px rgba(0,229,160,0.3);
+}
+.spacer { flex: 1; }
+
+/* Success state */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.form-success.show { display: block; animation: fadeInUp 0.6s ease; }
+.success-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(0,229,160,0.1);
+  border: 2px solid var(--accent2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  font-size: 2rem;
+  animation: successPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@keyframes successPop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.success-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.success-text {
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* INFO */
+.info-section {
+  background: var(--dark-gray);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 3rem auto 0;
+}
+.info-block h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.info-block p, .info-block a {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  font-weight: 300;
+}
+.info-block a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.info-block a:hover { color: var(--white); }
+
+/* FOOTER */
+footer {
+  padding: 3rem;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.footer-logos {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0.6;
+}
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  font-family: 'Space Mono', monospace;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SOUND WAVE DECORATION */
+.sound-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  justify-content: center;
+  margin: 3rem 0;
+}
+.sound-wave .bar {
+  width: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: soundWave 1.2s ease-in-out infinite;
+}
+@keyframes soundWave {
+  0%, 100% { height: 4px; opacity: 0.3; }
+  50% { height: 30px; opacity: 1; }
+}
+
+/* GLITCH */
+.glitch { position: relative; }
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.glitch::before {
+  animation: glitch1 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  color: var(--accent2);
+}
+.glitch::after {
+  animation: glitch2 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  color: var(--accent);
+}
+@keyframes glitch1 {
+  0%, 95% { transform: translateX(0); }
+  96% { transform: translateX(-3px); }
+  97% { transform: translateX(3px); }
+  98% { transform: translateX(-1px); }
+  99% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+@keyframes glitch2 {
+  0%, 95% { transform: translateX(0); }
+  96% { transform: translateX(2px); }
+  97% { transform: translateX(-2px); }
+  98% { transform: translateX(4px); }
+  99% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+/* Noise overlay */
+.noise {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section, .form-section { padding: 5rem 1.5rem; }
+  .about-section { grid-template-columns: 1fr; gap: 3rem; }
+  .about-visual { height: 200px; }
+  .festival-stats { gap: 2rem; }
+  .hero { padding: 8rem 1.5rem 4rem; }
+  .cursor-dot, .cursor-ring { display: none; }
+  .track-selector { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; }
+  .criteria-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Piacenza <span>Podcast</span> Academy</a>
+  <div class="nav-links">
+    <a href="#percorso">Percorso</a>
+    <a href="#impara">Competenze</a>
+    <a href="#selezione">Selezione</a>
+    <a href="#festival">Festival</a>
+    <a href="#candidati" class="nav-cta">Candidati</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="waveCanvas" class="waveform-bg"></canvas>
+  <div class="float-icons" id="floatIcons"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      Open Call 2026 — 14/25 anni
+    </div>
+    <h1>
+      <span class="line">Piacenza</span>
+      <span class="line"><span class="outline glitch" data-text="Podcast">Podcast</span></span>
+      <span class="line"><span class="accent">Academy</span></span>
+    </h1>
+    <p class="hero-sub">
+      Un percorso formativo immersivo per chi ha tra i 14 e i 25 anni e vuole entrare nei linguaggi del podcasting, dal primo ascolto alla redazione live di un festival.
+    </p>
+    <div class="hero-ctas">
+      <a href="#candidati" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Candidati ora
+      </a>
+      <a href="#percorso" class="btn-secondary">
+        Scopri il percorso
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <span>Italian Podcast Awards <span class="dot"></span> Festival del Pensare Contemporaneo <span class="dot"></span> Piacenza 2026 <span class="dot"></span> Ascolto <span class="dot"></span> Voce <span class="dot"></span> Narrazione <span class="dot"></span> Redazione Live <span class="dot"></span> 14–25 anni <span class="dot"></span></span>
+    <span>Italian Podcast Awards <span class="dot"></span> Festival del Pensare Contemporaneo <span class="dot"></span> Piacenza 2026 <span class="dot"></span> Ascolto <span class="dot"></span> Voce <span class="dot"></span> Narrazione <span class="dot"></span> Redazione Live <span class="dot"></span> 14–25 anni <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="contesto">
+  <div class="about-section">
+    <div class="reveal">
+      <div class="section-label">Il progetto</div>
+      <h2 class="section-title">Raccontare il presente con la voce</h2>
+      <div class="section-text" style="margin-bottom: 2rem;">
+        <p>Nel 2025 Piacenza ha ospitato gli Italian Podcast Awards — il POD, in dialogo con il Festival del Pensare Contemporaneo, progetto culturale promosso dal Comune di Piacenza e dalla Fondazione di Piacenza e Vigevano e realizzato da Fondazione Teatri di Piacenza.</p>
+        <br>
+        <p>Il POD è una piattaforma culturale dedicata al podcasting italiano che legge il presente attraverso le opere audio che hanno contribuito a orientare il dibattito pubblico, l'immaginario collettivo e le forme del racconto contemporaneo.</p>
+        <br>
+        <p>Da questo contesto nasce la <strong style="color:var(--accent)">Piacenza Podcast Academy</strong>: un percorso formativo rivolto a chi ha tra i 14 e i 25 anni — dentro e fuori dalle scuole — pensato per avvicinare le nuove generazioni ai linguaggi del podcasting come strumento di espressione, analisi critica e partecipazione culturale.</p>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="eq-bars" id="eqBars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COSA IMPARERAI -->
+<section id="impara">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label">Cosa imparerai</div>
+      <h2 class="section-title">Dall'ascolto alla produzione</h2>
+      <p class="section-text">L'Academy è un percorso immersivo e partecipativo: chi vi prende parte è chiamato a confrontarsi con i linguaggi del presente e a produrre contenuti che entreranno nel racconto collettivo del Festival.</p>
+    </div>
+    <div class="learn-grid">
+      <div class="learn-card reveal">
+        <span class="learn-icon">🎧</span>
+        <h3>Ascolto critico</h3>
+        <p>Le basi dell'ascolto consapevole e dell'analisi dei formati audio. Capire cosa rende un podcast efficace, riconoscerne la struttura, smontarne il linguaggio.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">✍️</span>
+        <h3>Scrittura per l'audio</h3>
+        <p>Sperimentare la scrittura pensata per essere ascoltata. Costruire scalette, scrivere script, lavorare sul ritmo della narrazione parlata.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🎙️</span>
+        <h3>Voce e registrazione</h3>
+        <p>Usare la voce come strumento espressivo. Acquisire le competenze tecniche di registrazione, dall'uso del microfono alla gestione degli ambienti sonori.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🎛️</span>
+        <h3>Montaggio e produzione</h3>
+        <p>Le basi del montaggio audio, l'editing, il sound design. Trasformare materiale grezzo in un prodotto finito, coerente e pronto per la pubblicazione.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">👥</span>
+        <h3>Lavoro di redazione</h3>
+        <p>Operare come un vero team editoriale, con ruoli definiti e responsabilità condivise. Imparare a decidere insieme, a rispettare le scadenze, a coordinarsi.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">📡</span>
+        <h3>Reportage live</h3>
+        <p>Produrre contenuti in tempo reale durante il Festival. Interviste, restituzioni quotidiane, racconti delle giornate: giornalismo culturale sul campo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERCORSO / TIMELINE -->
+<section class="timeline-section" id="percorso">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label">Il percorso</div>
+      <h2 class="section-title">Sei mesi di formazione, dalla teoria alla redazione live</h2>
+      <p class="section-text">Tre fasi, sei appuntamenti obbligatori, tutti a Piacenza. Un cammino progressivo che parte dall'ascolto e arriva alla copertura in diretta del Festival del Pensare Contemporaneo.</p>
+    </div>
+    <div class="sound-wave" id="soundWave1"></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase phase1">Fase 1 — Formazione di base</div>
+        <div class="timeline-date">12 aprile 2026</div>
+        <div class="timeline-title">Modulo I — Ascolto & Idea + Modulo II — Scrittura & Voce</div>
+        <div class="timeline-desc">La prima giornata è dedicata a costruire le fondamenta: imparare ad ascoltare un podcast in modo analitico, riconoscerne la struttura, generare idee. Nel pomeriggio si passa alla scrittura per l'audio e all'uso della voce.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase phase1">Fase 1 — Formazione di base</div>
+        <div class="timeline-date">10 maggio 2026</div>
+        <div class="timeline-title">Modulo III — Produzione Pratica Base</div>
+        <div class="timeline-desc">Mani sulla tecnologia: registrazione, editing, montaggio. Si sperimenta concretamente la produzione audio, dalla preparazione del setting tecnico alla post-produzione.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase phase2">Fase 2 — Specializzazione e produzione</div>
+        <div class="timeline-date">14 giugno 2026</div>
+        <div class="timeline-title">Modulo IV — Specializzazione e Impostazione</div>
+        <div class="timeline-desc">Si definiscono i ruoli all'interno della redazione e si comincia a lavorare al podcast collettivo. Ogni gruppo approfondisce un aspetto specifico della produzione.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase phase2">Fase 2 — Specializzazione e produzione</div>
+        <div class="timeline-date">20 settembre 2026</div>
+        <div class="timeline-title">Modulo V — Specializzazione e Finalizzazione</div>
+        <div class="timeline-desc">L'ultimo modulo prima del Festival: si finalizza il podcast collettivo, si definisce la strategia per la copertura live, si prova la macchina della redazione.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase phase3">Fase 3 — Redazione live</div>
+        <div class="timeline-date">23 settembre 2026</div>
+        <div class="timeline-title">Briefing operativo</div>
+        <div class="timeline-desc">Strutturazione della redazione e preparazione alla copertura in diretta del Festival. Si assegnano i compiti, si organizzano i turni, si definisce il piano editoriale delle giornate.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase phase3">Fase 3 — Redazione live</div>
+        <div class="timeline-date">24—27 settembre 2026</div>
+        <div class="timeline-title">Redazione live al Festival</div>
+        <div class="timeline-desc">Quattro giorni di produzione in tempo reale. Interviste, reportage, restituzioni quotidiane. Il lavoro dei partecipanti diventa parte integrante della narrazione pubblica del Festival e viene valorizzato durante la serata degli Italian Podcast Awards.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELEZIONE -->
+<section class="selection-section" id="selezione">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label">La selezione</div>
+      <h2 class="section-title">I posti sono limitati. La selezione è parte del percorso.</h2>
+      <p class="section-text">L'Academy accoglie un numero ristretto di partecipanti per garantire la qualità dell'esperienza e l'efficacia del lavoro di gruppo. Le candidature vengono valutate sulla base di criteri trasparenti, pensati per costruire un gruppo eterogeneo, motivato, e capace di lavorare insieme.</p>
+    </div>
+    <div class="criteria-grid">
+      <div class="criterion reveal">
+        <div class="criterion-num">01</div>
+        <div>
+          <h3>Motivazione</h3>
+          <p>Conta la qualità dell'interesse, la capacità di spiegare perché il podcasting e perché adesso. Non serve un curriculum: serve una ragione.</p>
+        </div>
+      </div>
+      <div class="criterion reveal">
+        <div class="criterion-num">02</div>
+        <div>
+          <h3>Disponibilità e impegno</h3>
+          <p>Il percorso richiede presenza a tutti gli appuntamenti. La selezione tiene conto della capacità di garantire una partecipazione continuativa da aprile a settembre.</p>
+        </div>
+      </div>
+      <div class="criterion reveal">
+        <div class="criterion-num">03</div>
+        <div>
+          <h3>Curiosità verso i linguaggi contemporanei</h3>
+          <p>L'Academy cerca persone attente alle forme del racconto di oggi: chi ascolta, chi legge, chi osserva, chi si fa domande su come funzionano i media.</p>
+        </div>
+      </div>
+      <div class="criterion reveal">
+        <div class="criterion-num">04</div>
+        <div>
+          <h3>Attitudine al lavoro di gruppo</h3>
+          <p>La redazione funziona solo se ci si ascolta. La selezione privilegia chi dimostra apertura, spirito collaborativo e voglia di mettersi in gioco con gli altri.</p>
+        </div>
+      </div>
+      <div class="criterion reveal">
+        <div class="criterion-num">05</div>
+        <div>
+          <h3>Diversità di prospettive</h3>
+          <p>L'obiettivo è comporre un gruppo ricco di sguardi diversi: per età, provenienza, interessi, formazione. La diversità è un criterio, non un incidente.</p>
+        </div>
+      </div>
+      <div class="criterion reveal">
+        <div class="criterion-num">06</div>
+        <div>
+          <h3>Esperienze precedenti (non obbligatorie)</h3>
+          <p>Avere già lavorato con l'audio, il giornalismo scolastico, il teatro, la musica o la scrittura è un elemento che viene considerato ma non è in alcun modo un requisito.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FESTIVAL -->
+<section class="festival-section" id="festival">
+  <div class="festival-content reveal">
+    <div class="section-label">L'esperienza</div>
+    <h2 class="section-title">Dentro il Festival, dentro il POD</h2>
+    <p class="festival-highlight">
+      Durante le giornate del Festival del Pensare Contemporaneo, i partecipanti alla Piacenza Podcast Academy operano come <strong>redazione culturale</strong>, producendo contenuti audio — e, dove possibile, video e social — in tempo reale.
+    </p>
+    <p class="section-text" style="margin-bottom:2rem;">
+      Il lavoro dei partecipanti è parte integrante della narrazione pubblica dell'evento e viene valorizzato durante la serata degli Italian Podcast Awards, generando un dialogo diretto tra formazione, produzione culturale e professionisti del settore.
+    </p>
+    <div class="festival-stats">
+      <div class="stat">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Giorni di festival</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Moduli formativi</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Mesi di percorso</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- FORM                     -->
+<!-- ======================== -->
+<section class="form-section" id="candidati">
+  <div class="form-container">
+    <div class="reveal">
+      <div class="section-label">Candidatura</div>
+      <h2 class="section-title">La tua voce <span style="color:var(--accent)">conta.</span></h2>
+      <p class="section-text" style="margin-bottom:0.5rem;">La Piacenza Podcast Academy è aperta a chi ha tra i 14 e i 25 anni. Puoi candidarti come singolo oppure attraverso la tua scuola. Scegli il tuo percorso e compila il modulo: le candidature verranno valutate e riceverai una risposta nei giorni successivi alla chiusura della call.</p>
+      <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--accent);letter-spacing:0.1em;margin-top:1rem;">Scadenza: 28 febbraio 2026</p>
+    </div>
+
+    <!-- Track selector -->
+    <div class="track-selector reveal" id="trackSelector">
+      <div class="track-option" data-track="individual" onclick="selectTrack('individual')">
+        <span class="track-icon">🎤</span>
+        <h3>Candidatura individuale</h3>
+        <p>Hai tra i 14 e i 25 anni e vuoi partecipare in prima persona. Puoi essere studente, universitario, o semplicemente una persona curiosa.</p>
+      </div>
+      <div class="track-option" data-track="school" onclick="selectTrack('school')">
+        <span class="track-icon">🏫</span>
+        <h3>Candidatura tramite scuola</h3>
+        <p>Sei un docente e vuoi candidare una delegazione di studentesse e studenti della tua scuola all'intero percorso.</p>
+      </div>
+    </div>
+
+    <!-- ===== FORM: INDIVIDUAL ===== -->
+    <div id="formIndividual" style="display:none;">
+      <div class="form-progress" id="progressInd">
+        <div class="progress-step active" data-step="Chi sei"></div>
+        <div class="progress-step" data-step="Motivazione"></div>
+        <div class="progress-step" data-step="Disponibilità"></div>
+      </div>
+
+      <!-- Step 1: Chi sei -->
+      <div class="form-step active" id="ind-step-1">
+        <h3 class="form-step-title">Chi sei</h3>
+        <p class="form-step-sub">Raccontaci di te. Queste informazioni ci servono per conoscerti e per contattarti.</p>
+        <div class="field-row">
+          <div class="field">
+            <label>Nome <span class="required">*</span></label>
+            <input type="text" id="ind-nome" placeholder="Il tuo nome" required>
+          </div>
+          <div class="field">
+            <label>Cognome <span class="required">*</span></label>
+            <input type="text" id="ind-cognome" placeholder="Il tuo cognome" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Data di nascita <span class="required">*</span></label>
+            <input type="date" id="ind-nascita" required>
+          </div>
+          <div class="field">
+            <label>Città di residenza <span class="required">*</span></label>
+            <input type="text" id="ind-citta" placeholder="Es. Piacenza">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" id="ind-email" placeholder="la-tua@email.it">
+        </div>
+        <div class="field">
+          <label>Telefono <span class="required">*</span></label>
+          <input type="tel" id="ind-telefono" placeholder="+39 ...">
+        </div>
+        <div class="field">
+          <label>Cosa fai nella vita? <span class="required">*</span></label>
+          <div class="radio-group" id="ind-occupazione">
+            <div class="radio-option" data-value="Studente scuola superiore" onclick="selectRadio(this)">Studente scuola superiore</div>
+            <div class="radio-option" data-value="Studente universitario" onclick="selectRadio(this)">Universitario/a</div>
+            <div class="radio-option" data-value="Lavoro" onclick="selectRadio(this)">Lavoro</div>
+            <div class="radio-option" data-value="Altro" onclick="selectRadio(this)">Altro</div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <div class="spacer"></div>
+          <button class="btn-next" onclick="nextStep('ind', 2)">Avanti →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Motivazione -->
+      <div class="form-step" id="ind-step-2">
+        <h3 class="form-step-title">Motivazione</h3>
+        <p class="form-step-sub">Qui ci interessa capire il tuo punto di vista, le tue ragioni, il tuo sguardo. Non ci sono risposte giuste.</p>
+        <div class="field">
+          <label>Perché vuoi partecipare alla Piacenza Podcast Academy? <span class="required">*</span></label>
+          <textarea id="ind-motivazione" placeholder="Raccontaci cosa ti spinge a candidarti, cosa ti incuriosisce del podcasting, cosa speri di portarti a casa da questa esperienza..." maxlength="1500" oninput="updateCharCount(this, 'ind-mot-count')"></textarea>
+          <div class="char-count" id="ind-mot-count">0 / 1500</div>
+        </div>
+        <div class="field">
+          <label>C'è un podcast, un programma radio, un progetto audio che ti ha colpito particolarmente? Quale e perché?</label>
+          <textarea id="ind-podcast" placeholder="Non è obbligatorio, ma ci aiuta a capire i tuoi gusti e il tuo sguardo..." maxlength="800" oninput="updateCharCount(this, 'ind-pod-count')"></textarea>
+          <div class="char-count" id="ind-pod-count">0 / 800</div>
+        </div>
+        <div class="field">
+          <label>Hai già esperienze legate all'audio, al giornalismo, alla scrittura, al teatro o alla musica?</label>
+          <div class="radio-group" id="ind-esperienza">
+            <div class="radio-option" data-value="Sì" onclick="selectRadio(this); showConditional('ind-esp-detail')">Sì</div>
+            <div class="radio-option" data-value="No" onclick="selectRadio(this); hideConditional('ind-esp-detail')">No</div>
+          </div>
+          <div class="conditional" id="ind-esp-detail">
+            <div class="field" style="margin-top:0.5rem;">
+              <textarea id="ind-esperienza-desc" placeholder="Raccontaci brevemente..." maxlength="800" oninput="updateCharCount(this, 'ind-esp-count')"></textarea>
+              <div class="char-count" id="ind-esp-count">0 / 800</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevStep('ind', 1)">← Indietro</button>
+          <button class="btn-next" onclick="nextStep('ind', 3)">Avanti →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Disponibilità -->
+      <div class="form-step" id="ind-step-3">
+        <h3 class="form-step-title">Disponibilità e consenso</h3>
+        <p class="form-step-sub">Il percorso si articola in sei appuntamenti obbligatori, tutti a Piacenza, tra aprile e settembre 2026.</p>
+        <div class="field" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
+          <p style="font-size:0.85rem;color:var(--gray);line-height:1.8;font-weight:300;">
+            <strong style="color:var(--white);">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
+            <strong style="color:var(--white);">10 maggio</strong> — Produzione Pratica Base<br>
+            <strong style="color:var(--white);">14 giugno</strong> — Specializzazione e Impostazione<br>
+            <strong style="color:var(--white);">20 settembre</strong> — Specializzazione e Finalizzazione<br>
+            <strong style="color:var(--white);">23 settembre</strong> — Briefing operativo<br>
+            <strong style="color:var(--white);">24–27 settembre</strong> — Redazione live durante il Festival
+          </p>
+        </div>
+        <div class="field">
+          <label>Sei disponibile a partecipare a tutte le date indicate? <span class="required">*</span></label>
+          <div class="radio-group" id="ind-disponibilita">
+            <div class="radio-option" data-value="Sì" onclick="selectRadio(this); hideConditional('ind-disp-detail')">Sì</div>
+            <div class="radio-option" data-value="Alcune date potrebbero essere problematiche" onclick="selectRadio(this); showConditional('ind-disp-detail')">Alcune date potrebbero essere problematiche</div>
+            <div class="radio-option" data-value="No" onclick="selectRadio(this); hideConditional('ind-disp-detail')">No</div>
+          </div>
+          <div class="conditional" id="ind-disp-detail">
+            <div class="field" style="margin-top:0.5rem;">
+              <textarea id="ind-disponibilita-desc" placeholder="Indica quali date e perché..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('ind-privacy')">
+            <span id="ind-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Autorizzo il trattamento dei dati personali ai sensi del GDPR (Regolamento UE 2016/679) per le finalità connesse alla selezione e all'organizzazione della Piacenza Podcast Academy. <span class="required">*</span></span>
+          </label>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevStep('ind', 2)">← Indietro</button>
+          <button class="btn-next btn-submit" onclick="submitForm('individual')">Invia candidatura ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FORM: SCHOOL ===== -->
+    <div id="formSchool" style="display:none;">
+      <div class="form-progress" id="progressSch">
+        <div class="progress-step active" data-step="La scuola"></div>
+        <div class="progress-step" data-step="Docente"></div>
+        <div class="progress-step" data-step="Studenti"></div>
+        <div class="progress-step" data-step="Motivazione"></div>
+        <div class="progress-step" data-step="Disponibilità"></div>
+      </div>
+
+      <!-- Step 1: La scuola -->
+      <div class="form-step active" id="sch-step-1">
+        <h3 class="form-step-title">La scuola</h3>
+        <p class="form-step-sub">Informazioni sull'istituto che presenta la candidatura.</p>
+        <div class="field">
+          <label>Nome dell'istituto scolastico <span class="required">*</span></label>
+          <input type="text" id="sch-nome-istituto" placeholder="Es. Liceo Scientifico G. Marconi">
+        </div>
+        <div class="field">
+          <label>Tipologia di istituto <span class="required">*</span></label>
+          <select id="sch-tipologia">
+            <option value="" disabled selected>Seleziona...</option>
+            <option>Liceo classico</option>
+            <option>Liceo scientifico</option>
+            <option>Liceo linguistico</option>
+            <option>Liceo delle scienze umane</option>
+            <option>Liceo artistico</option>
+            <option>Liceo musicale e coreutico</option>
+            <option>Istituto tecnico</option>
+            <option>Istituto professionale</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Indirizzo della scuola <span class="required">*</span></label>
+          <input type="text" id="sch-indirizzo" placeholder="Via...">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Città e provincia <span class="required">*</span></label>
+            <input type="text" id="sch-citta" placeholder="Es. Piacenza (PC)">
+          </div>
+          <div class="field">
+            <label>Sito web della scuola</label>
+            <input type="url" id="sch-sito" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-nav">
+          <div class="spacer"></div>
+          <button class="btn-next" onclick="nextStep('sch', 2)">Avanti →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Docente referente -->
+      <div class="form-step" id="sch-step-2">
+        <h3 class="form-step-title">Il docente referente</h3>
+        <p class="form-step-sub">La persona che coordina il progetto all'interno della scuola e che sarà il nostro punto di contatto.</p>
+        <div class="field-row">
+          <div class="field">
+            <label>Nome e cognome <span class="required">*</span></label>
+            <input type="text" id="sch-docente-nome">
+          </div>
+          <div class="field">
+            <label>Materia di insegnamento <span class="required">*</span></label>
+            <input type="text" id="sch-docente-materia">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email del docente referente <span class="required">*</span></label>
+          <input type="email" id="sch-docente-email">
+        </div>
+        <div class="field">
+          <label>Telefono del docente referente <span class="required">*</span></label>
+          <input type="tel" id="sch-docente-tel" placeholder="+39 ...">
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevStep('sch', 1)">← Indietro</button>
+          <button class="btn-next" onclick="nextStep('sch', 3)">Avanti →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Delegazione studentesca -->
+      <div class="form-step" id="sch-step-3">
+        <h3 class="form-step-title">La delegazione studentesca</h3>
+        <p class="form-step-sub">Chi sono le studentesse e gli studenti che volete coinvolgere?</p>
+        <div class="field-row">
+          <div class="field">
+            <label>Numero di studenti da coinvolgere <span class="required">*</span></label>
+            <input type="number" id="sch-num-studenti" min="1" max="30" placeholder="Es. 8">
+          </div>
+          <div class="field">
+            <label>Classi di appartenenza <span class="required">*</span></label>
+            <input type="text" id="sch-classi" placeholder='Es. "3ªA e 4ªB"'>
+          </div>
+        </div>
+        <div class="field">
+          <label>Fascia d'età prevalente <span class="required">*</span></label>
+          <select id="sch-fascia-eta">
+            <option value="" disabled selected>Seleziona...</option>
+            <option>14–15 anni</option>
+            <option>16–17 anni</option>
+            <option>18–19 anni</option>
+            <option>Mista</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Come verranno selezionati gli studenti partecipanti? <span class="required">*</span></label>
+          <textarea id="sch-selezione-studenti" placeholder="Es. autocandidatura, selezione da parte dei docenti, progetto di classe..."></textarea>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevStep('sch', 2)">← Indietro</button>
+          <button class="btn-next" onclick="nextStep('sch', 4)">Avanti →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Motivazione -->
+      <div class="form-step" id="sch-step-4">
+        <h3 class="form-step-title">Motivazione e contesto</h3>
+        <p class="form-step-sub">Aiutateci a capire perché questa esperienza è importante per la vostra scuola.</p>
+        <div class="field">
+          <label>Perché la vostra scuola è interessata a partecipare? <span class="required">*</span></label>
+          <textarea id="sch-motivazione" maxlength="1500" oninput="updateCharCount(this, 'sch-mot-count')" placeholder="Raccontate le ragioni della vostra candidatura..."></textarea>
+          <div class="char-count" id="sch-mot-count">0 / 1500</div>
+        </div>
+        <div class="field">
+          <label>La scuola ha già realizzato esperienze legate al podcasting, alla produzione audio o al giornalismo scolastico?</label>
+          <div class="radio-group" id="sch-esperienza">
+            <div class="radio-option" data-value="Sì" onclick="selectRadio(this); showConditional('sch-esp-detail')">Sì</div>
+            <div class="radio-option" data-value="No" onclick="selectRadio(this); hideConditional('sch-esp-detail')">No</div>
+          </div>
+          <div class="conditional" id="sch-esp-detail">
+            <div class="field" style="margin-top:0.5rem;">
+              <textarea id="sch-esperienza-desc" placeholder="Descrivete brevemente l'esperienza..." maxlength="800" oninput="updateCharCount(this, 'sch-esp-count')"></textarea>
+              <div class="char-count" id="sch-esp-count">0 / 800</div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>La scuola ha già partecipato a edizioni precedenti del Festival del Pensare Contemporaneo o degli Italian Podcast Awards?</label>
+          <div class="radio-group" id="sch-festival-prev">
+            <div class="radio-option" data-value="Sì" onclick="selectRadio(this)">Sì</div>
+            <div class="radio-option" data-value="No" onclick="selectRadio(this)">No</div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevStep('sch', 3)">← Indietro</button>
+          <button class="btn-next" onclick="nextStep('sch', 5)">Avanti →</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Disponibilità -->
+      <div class="form-step" id="sch-step-5">
+        <h3 class="form-step-title">Disponibilità e consenso</h3>
+        <p class="form-step-sub">Il percorso si articola in sei appuntamenti obbligatori, tutti a Piacenza.</p>
+        <div class="field" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
+          <p style="font-size:0.85rem;color:var(--gray);line-height:1.8;font-weight:300;">
+            <strong style="color:var(--white);">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
+            <strong style="color:var(--white);">10 maggio</strong> — Produzione Pratica Base<br>
+            <strong style="color:var(--white);">14 giugno</strong> — Specializzazione e Impostazione<br>
+            <strong style="color:var(--white);">20 settembre</strong> — Specializzazione e Finalizzazione<br>
+            <strong style="color:var(--white);">23 settembre</strong> — Briefing operativo<br>
+            <strong style="color:var(--white);">24–27 settembre</strong> — Redazione live durante il Festival
+          </p>
+        </div>
+        <div class="field">
+          <label>La scuola è in grado di garantire la partecipazione degli studenti a tutte le date indicate? <span class="required">*</span></label>
+          <div class="radio-group" id="sch-disponibilita">
+            <div class="radio-option" data-value="Sì" onclick="selectRadio(this); hideConditional('sch-disp-detail')">Sì</div>
+            <div class="radio-option" data-value="Alcune date potrebbero essere problematiche" onclick="selectRadio(this); showConditional('sch-disp-detail')">Alcune date potrebbero essere problematiche</div>
+            <div class="radio-option" data-value="No" onclick="selectRadio(this); hideConditional('sch-disp-detail')">No</div>
+          </div>
+          <div class="conditional" id="sch-disp-detail">
+            <div class="field" style="margin-top:0.5rem;">
+              <textarea id="sch-disponibilita-desc" placeholder="Indicate quali date e perché..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('sch-autorizzazione')">
+            <span id="sch-autorizzazione-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Il/la docente referente dichiara di essere autorizzato/a dalla dirigenza scolastica a presentare questa manifestazione di interesse. <span class="required">*</span></span>
+          </label>
+        </div>
+        <div class="field" style="margin-top:0.5rem;">
+          <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('sch-privacy')">
+            <span id="sch-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Autorizzo il trattamento dei dati personali ai sensi del GDPR (Regolamento UE 2016/679) per le finalità connesse alla selezione e all'organizzazione della Piacenza Podcast Academy. <span class="required">*</span></span>
+          </label>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevStep('sch', 4)">← Indietro</button>
+          <button class="btn-next btn-submit" onclick="submitForm('school')">Invia candidatura ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">Candidatura inviata</h2>
+      <p class="success-text">Grazie per il tuo interesse. Riceverai una email di conferma e verrai contattato nei giorni successivi alla chiusura della call con tutte le informazioni operative.</p>
+      <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--accent);letter-spacing:0.1em;margin-top:2rem;">Per qualsiasi domanda: segreteriailpod@tlon.it</p>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section" id="info">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-title">Come partecipare</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-block reveal">
+        <h3>Chi può candidarsi</h3>
+        <p>La Piacenza Podcast Academy è aperta a chiunque abbia tra i 14 e i 25 anni. Le scuole possono candidare delegazioni di studenti; i singoli possono presentarsi autonomamente. La partecipazione richiede disponibilità alla collaborazione, al lavoro di gruppo e alla sperimentazione.</p>
+      </div>
+      <div class="info-block reveal">
+        <h3>Cosa prevede la partecipazione</h3>
+        <p>Il coinvolgimento attivo nelle diverse fasi formative, la produzione di un podcast collettivo, la partecipazione alla redazione culturale durante il Festival, e la presentazione pubblica del lavoro svolto nell'ambito degli Italian Podcast Awards — il POD.</p>
+      </div>
+      <div class="info-block reveal">
+        <h3>Contatti</h3>
+        <p>Per ulteriori informazioni scrivere a <a href="mailto:segreteriailpod@tlon.it">segreteriailpod@tlon.it</a> indicando nell'oggetto <strong style="color:var(--white)">OPEN CALL — POD</strong>.</p>
+        <br>
+        <p>La candidatura va presentata entro il <strong style="color:var(--accent)">28 febbraio 2026</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logos">
+    <span class="footer-logo">il POD</span>
+    <span class="footer-logo">Festival del Pensare Contemporaneo</span>
+    <span class="footer-logo">Comune di Piacenza</span>
+    <span class="footer-logo">Fondazione Teatri di Piacenza</span>
+    <span class="footer-logo">Tlon</span>
+  </div>
+  <p class="footer-copy">© 2026 Piacenza Podcast Academy — Italian Podcast Awards — il POD</p>
+</footer>
+
+<script>
+// ===== CUSTOM CURSOR =====
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX - 4 + 'px';
+  dot.style.top = mouseY - 4 + 'px';
+});
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.15;
+  ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = ringX + 'px';
+  ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+document.querySelectorAll('a, button, .learn-card, .track-option, .radio-option, .checkbox-option').forEach(el => {
+  el.addEventListener('mouseenter', () => { ring.style.width = '60px'; ring.style.height = '60px'; ring.style.borderColor = 'var(--accent2)'; });
+  el.addEventListener('mouseleave', () => { ring.style.width = '40px'; ring.style.height = '40px'; ring.style.borderColor = 'var(--accent)'; });
+});
+
+// ===== WAVEFORM CANVAS =====
+const canvas = document.getElementById('waveCanvas');
+const ctx = canvas.getContext('2d');
+let waveOffset = 0;
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+function drawWave() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const centerY = canvas.height / 2;
+  for (let w = 0; w < 3; w++) {
+    ctx.beginPath();
+    ctx.strokeStyle = w === 0 ? '#ff4d00' : w === 1 ? '#00e5a0' : '#6c5ce7';
+    ctx.lineWidth = 1.5;
+    for (let x = 0; x < canvas.width; x++) {
+      const y = centerY + Math.sin((x*0.003)+waveOffset+(w*2))*80 + Math.sin((x*0.007)+waveOffset*0.5+(w*1.5))*40 + Math.sin((x*0.015)+waveOffset*1.5)*20;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  waveOffset += 0.015;
+  requestAnimationFrame(drawWave);
+}
+drawWave();
+
+// ===== FLOATING ICONS =====
+const icons = ['🎧','🎙️','🎵','🎶','📻','🔊','🎚️','🎛️','⏯️','🎤'];
+const floatContainer = document.getElementById('floatIcons');
+for (let i = 0; i < 15; i++) {
+  const icon = document.createElement('div');
+  icon.className = 'float-icon';
+  icon.textContent = icons[Math.floor(Math.random()*icons.length)];
+  icon.style.left = Math.random()*100+'%';
+  icon.style.animationDelay = Math.random()*20+'s';
+  icon.style.animationDuration = (15+Math.random()*15)+'s';
+  icon.style.fontSize = (1.2+Math.random()*1.5)+'rem';
+  floatContainer.appendChild(icon);
+}
+
+// ===== EQ BARS =====
+const eqContainer = document.getElementById('eqBars');
+for (let i = 0; i < 40; i++) {
+  const bar = document.createElement('div');
+  bar.className = 'eq-bar';
+  bar.style.animationDelay = (Math.random()*1.5)+'s';
+  bar.style.animationDuration = (0.8+Math.random()*1)+'s';
+  eqContainer.appendChild(bar);
+}
+
+// ===== SOUND WAVE =====
+const sw1 = document.getElementById('soundWave1');
+for (let i = 0; i < 80; i++) {
+  const bar = document.createElement('div');
+  bar.className = 'bar';
+  bar.style.animationDelay = (i*0.05)+'s';
+  bar.style.animationDuration = (0.8+Math.random()*0.8)+'s';
+  sw1.appendChild(bar);
+}
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+// ===== NAV =====
+let lastScroll = 0;
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const s = window.pageYOffset;
+  if (s > lastScroll && s > 100) navbar.classList.add('hidden');
+  else navbar.classList.remove('hidden');
+  lastScroll = s;
+});
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ===== COUNTER ANIMATION =====
+const statNumbers = document.querySelectorAll('.stat-number');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.textContent);
+      let current = 0;
+      const increment = target / 30;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) { el.textContent = target; clearInterval(timer); }
+        else el.textContent = Math.floor(current);
+      }, 40);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+statNumbers.forEach(el => counterObserver.observe(el));
+
+// ===== FORM LOGIC =====
+let currentTrack = null;
+const checkboxStates = {};
+
+function selectTrack(track) {
+  currentTrack = track;
+  document.querySelectorAll('.track-option').forEach(el => el.classList.remove('active'));
+  document.querySelector(`[data-track="${track}"]`).classList.add('active');
+  document.getElementById('formIndividual').style.display = track === 'individual' ? 'block' : 'none';
+  document.getElementById('formSchool').style.display = track === 'school' ? 'block' : 'none';
+  document.getElementById('formSuccess').classList.remove('show');
+}
+
+function selectRadio(el) {
+  el.parentElement.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleCheckbox(id) {
+  checkboxStates[id] = !checkboxStates[id];
+  const box = document.getElementById(id + '-box');
+  if (checkboxStates[id]) {
+    box.style.borderColor = 'var(--accent2)';
+    box.style.background = 'rgba(0,229,160,0.2)';
+    box.textContent = '✓';
+    box.style.color = 'var(--accent2)';
+  } else {
+    box.style.borderColor = 'rgba(255,255,255,0.2)';
+    box.style.background = 'transparent';
+    box.textContent = '';
+  }
+}
+
+function showConditional(id) {
+  document.getElementById(id).classList.add('show');
+}
+function hideConditional(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+function updateCharCount(textarea, countId) {
+  const count = textarea.value.length;
+  const max = parseInt(textarea.getAttribute('maxlength'));
+  const el = document.getElementById(countId);
+  el.textContent = count + ' / ' + max;
+  if (count > max * 0.9) el.classList.add('over');
+  else el.classList.remove('over');
+}
+
+function nextStep(prefix, step) {
+  const current = document.querySelector(`#${prefix}-step-${step-1}`);
+  const next = document.querySelector(`#${prefix}-step-${step}`);
+  if (current) current.classList.remove('active');
+  if (next) { next.classList.add('active'); next.style.animation = 'none'; next.offsetHeight; next.style.animation = 'fadeInUp 0.5s ease'; }
+  updateProgress(prefix, step);
+  document.getElementById('candidati').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function prevStep(prefix, step) {
+  const current = document.querySelector(`#${prefix}-step-${step+1}`);
+  const prev = document.querySelector(`#${prefix}-step-${step}`);
+  if (current) current.classList.remove('active');
+  if (prev) { prev.classList.add('active'); prev.style.animation = 'none'; prev.offsetHeight; prev.style.animation = 'fadeInUp 0.5s ease'; }
+  updateProgress(prefix, step);
+  document.getElementById('candidati').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateProgress(prefix, currentStep) {
+  const progressId = prefix === 'ind' ? 'progressInd' : 'progressSch';
+  const steps = document.querySelectorAll(`#${progressId} .progress-step`);
+  steps.forEach((s, i) => {
+    s.classList.remove('active', 'completed');
+    if (i < currentStep - 1) s.classList.add('completed');
+    else if (i === currentStep - 1) s.classList.add('active');
+  });
+}
+
+function submitForm(track) {
+  // Collect form data
+  const data = {};
+  const prefix = track === 'individual' ? 'ind' : 'sch';
+
+  // Gather all inputs
+  document.querySelectorAll(`#form${track === 'individual' ? 'Individual' : 'School'} input, #form${track === 'individual' ? 'Individual' : 'School'} select, #form${track === 'individual' ? 'Individual' : 'School'} textarea`).forEach(el => {
+    if (el.id && el.value) data[el.id] = el.value;
+  });
+
+  // Gather radio selections
+  document.querySelectorAll(`#form${track === 'individual' ? 'Individual' : 'School'} .radio-option.selected`).forEach(el => {
+    data[el.parentElement.id] = el.getAttribute('data-value');
+  });
+
+  data.track = track;
+  data.timestamp = new Date().toISOString();
+
+  console.log('📋 Candidatura:', JSON.stringify(data, null, 2));
+
+  // Show success
+  document.getElementById('formIndividual').style.display = 'none';
+  document.getElementById('formSchool').style.display = 'none';
+  document.getElementById('trackSelector').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+  document.getElementById('candidati').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
