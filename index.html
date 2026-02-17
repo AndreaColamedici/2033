@@ -9,14 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black: #0a0a0a;
-  --white: #f5f5f0;
-  --accent: #ff4d00;
-  --accent2: #00e5a0;
-  --accent3: #6c5ce7;
-  --gray: #888;
-  --dark-gray: #1a1a1a;
-  --mid-gray: #2a2a2a;
+  --black: #1a1a1a;
+  --white: #fffdf0;
+  --bg: #f5c518;
+  --bg-soft: #e8b800;
+  --bg-softer: #d4a800;
+  --accent: #1a1a1a;
+  --accent2: #ff3d00;
+  --accent3: #004d40;
+  --gray: #4a4a4a;
+  --dark-gray: rgba(26,26,26,0.06);
+  --mid-gray: rgba(26,26,26,0.1);
+  --text: #1a1a1a;
+  --text-soft: #3a3a3a;
   --error: #ff4757;
 }
 
@@ -25,12 +30,12 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--black);
+  scrollbar-color: var(--accent) var(--bg);
 }
 
 body {
-  background: var(--black);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--text);
   font-family: 'Space Grotesk', sans-serif;
   overflow-x: hidden;
   line-height: 1.6;
@@ -68,8 +73,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   backdrop-filter: blur(20px);
-  background: rgba(10,10,10,0.7);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(245,197,24,0.85);
+  border-bottom: 1px solid rgba(26,26,26,0.1);
   transition: transform 0.4s ease;
 }
 nav.hidden { transform: translateY(-100%); }
@@ -79,13 +84,13 @@ nav.hidden { transform: translateY(-100%); }
   font-size: 0.85rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--text);
   text-decoration: none;
 }
-.nav-logo span { color: var(--accent); }
+.nav-logo span { color: var(--accent2); }
 .nav-links { display: flex; gap: 2rem; align-items: center; }
 .nav-links a {
-  color: var(--gray);
+  color: var(--text-soft);
   text-decoration: none;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
@@ -93,10 +98,10 @@ nav.hidden { transform: translateY(-100%); }
   transition: color 0.3s;
   font-weight: 500;
 }
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover { color: var(--text); }
 .nav-cta {
-  background: var(--accent) !important;
-  color: var(--black) !important;
+  background: var(--text) !important;
+  color: var(--bg) !important;
   padding: 0.5rem 1.2rem;
   border-radius: 2rem;
   font-weight: 600 !important;
@@ -104,7 +109,7 @@ nav.hidden { transform: translateY(-100%); }
 }
 .nav-cta:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(255,77,0,0.4);
+  box-shadow: 0 0 30px rgba(26,26,26,0.3);
 }
 
 /* HERO */
@@ -153,12 +158,12 @@ nav.hidden { transform: translateY(-100%); }
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 1.2rem;
-  border: 1px solid rgba(255,77,0,0.3);
+  border: 1px solid rgba(26,26,26,0.3);
   border-radius: 2rem;
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text);
   margin-bottom: 2rem;
   animation: fadeInUp 1s ease 0.2s both;
   font-family: 'Space Mono', monospace;
@@ -183,13 +188,13 @@ nav.hidden { transform: translateY(-100%); }
 }
 .hero h1 .line { display: block; }
 .hero h1 .outline {
-  -webkit-text-stroke: 1.5px var(--white);
+  -webkit-text-stroke: 1.5px var(--text);
   color: transparent;
 }
-.hero h1 .accent { color: var(--accent); }
+.hero h1 .accent { color: var(--accent2); }
 .hero-sub {
   font-size: clamp(1rem, 2vw, 1.3rem);
-  color: var(--gray);
+  color: var(--text-soft);
   max-width: 620px;
   margin: 0 auto 2.5rem;
   font-weight: 300;
@@ -208,8 +213,8 @@ nav.hidden { transform: translateY(-100%); }
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2.5rem;
-  background: var(--accent);
-  color: var(--black);
+  background: var(--text);
+  color: var(--bg);
   text-decoration: none;
   border-radius: 3rem;
   font-weight: 600;
@@ -222,7 +227,7 @@ nav.hidden { transform: translateY(-100%); }
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 40px rgba(255,77,0,0.3);
+  box-shadow: 0 10px 40px rgba(26,26,26,0.25);
 }
 .btn-secondary {
   display: inline-flex;
@@ -230,17 +235,17 @@ nav.hidden { transform: translateY(-100%); }
   gap: 0.5rem;
   padding: 1rem 2.5rem;
   background: transparent;
-  color: var(--white);
+  color: var(--text);
   text-decoration: none;
   border-radius: 3rem;
   font-weight: 500;
   font-size: 0.95rem;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(26,26,26,0.3);
   transition: all 0.3s ease;
 }
 .btn-secondary:hover {
-  border-color: var(--white);
-  background: rgba(255,255,255,0.05);
+  border-color: var(--text);
+  background: rgba(26,26,26,0.05);
 }
 .scroll-indicator {
   position: absolute;
@@ -257,7 +262,7 @@ nav.hidden { transform: translateY(-100%); }
 .scroll-line {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
+  background: linear-gradient(to bottom, var(--text), transparent);
   animation: scrollPulse 2s ease infinite;
 }
 @keyframes scrollPulse {
@@ -275,10 +280,10 @@ nav.hidden { transform: translateY(-100%); }
 /* MARQUEE */
 .marquee-section {
   padding: 1.5rem 0;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(26,26,26,0.1);
+  border-bottom: 1px solid rgba(26,26,26,0.1);
   overflow: hidden;
-  background: var(--dark-gray);
+  background: var(--bg-soft);
 }
 .marquee-track {
   display: flex;
@@ -314,7 +319,7 @@ section { padding: 8rem 3rem; position: relative; }
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent2);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -324,7 +329,7 @@ section { padding: 8rem 3rem; position: relative; }
   content: '';
   width: 30px;
   height: 1px;
-  background: var(--accent);
+  background: var(--accent2);
 }
 .section-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -337,7 +342,7 @@ section { padding: 8rem 3rem; position: relative; }
 .section-text {
   font-size: 1.05rem;
   line-height: 1.8;
-  color: rgba(245,245,240,0.7);
+  color: var(--text-soft);
   max-width: 700px;
   font-weight: 300;
 }
@@ -384,8 +389,8 @@ section { padding: 8rem 3rem; position: relative; }
   margin: 4rem auto 0;
 }
 .learn-card {
-  background: var(--dark-gray);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(26,26,26,0.08);
   border-radius: 1rem;
   padding: 2rem;
   position: relative;
@@ -393,7 +398,7 @@ section { padding: 8rem 3rem; position: relative; }
   transition: all 0.4s ease;
 }
 .learn-card:hover {
-  border-color: rgba(255,77,0,0.3);
+  border-color: rgba(26,26,26,0.2);
   transform: translateY(-4px);
 }
 .learn-card::before {
@@ -426,7 +431,7 @@ section { padding: 8rem 3rem; position: relative; }
 /* FORMATORI */
 .formatori-section {
   padding: 6rem 2rem;
-  background: var(--black);
+  background: var(--bg-soft);
   position: relative;
 }
 .formatori-section::before {
@@ -436,15 +441,15 @@ section { padding: 8rem 3rem; position: relative; }
   transform: translateX(-50%);
   width: 80%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--text), transparent);
 }
 .formatori-highlight {
   text-align: center;
   margin-bottom: 4rem;
   padding: 2.5rem;
-  border: 1px solid rgba(255,77,0,0.2);
+  border: 1px solid rgba(26,26,26,0.15);
   border-radius: 1.5rem;
-  background: linear-gradient(135deg, rgba(255,77,0,0.05), rgba(108,92,231,0.05));
+  background: rgba(26,26,26,0.04);
   position: relative;
   overflow: hidden;
 }
@@ -453,12 +458,12 @@ section { padding: 8rem 3rem; position: relative; }
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  background: linear-gradient(90deg, var(--accent2), var(--accent3));
 }
 .formatori-highlight p {
   font-size: 1.2rem;
   line-height: 1.8;
-  color: rgba(245,245,240,0.9);
+  color: var(--text);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -469,8 +474,8 @@ section { padding: 8rem 3rem; position: relative; }
   margin-top: 2rem;
 }
 .formatore-card {
-  background: var(--dark-gray);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(26,26,26,0.08);
   border-radius: 1rem;
   padding: 2rem;
   text-align: center;
@@ -479,7 +484,7 @@ section { padding: 8rem 3rem; position: relative; }
   transition: all 0.4s ease;
 }
 .formatore-card:hover {
-  border-color: rgba(255,77,0,0.3);
+  border-color: rgba(26,26,26,0.2);
   transform: translateY(-4px);
 }
 .formatore-card::before {
@@ -509,7 +514,7 @@ section { padding: 8rem 3rem; position: relative; }
   margin-bottom: 0.5rem;
 }
 .formatore-card .formatore-role {
-  color: var(--accent);
+  color: var(--accent2);
   font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -557,7 +562,7 @@ section { padding: 8rem 3rem; position: relative; }
   width: 22px; height: 22px;
   border-radius: 50%;
   border: 2px solid var(--accent);
-  background: var(--dark-gray);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -565,7 +570,7 @@ section { padding: 8rem 3rem; position: relative; }
 .timeline-dot::after {
   content: '';
   width: 8px; height: 8px;
-  background: var(--accent);
+  background: var(--text);
   border-radius: 50%;
 }
 .timeline-item:nth-child(2) .timeline-dot { border-color: var(--accent2); }
@@ -602,7 +607,7 @@ section { padding: 8rem 3rem; position: relative; }
 
 /* SELECTION CRITERIA */
 .selection-section {
-  background: linear-gradient(180deg, var(--black) 0%, rgba(108,92,231,0.06) 100%);
+  background: var(--bg-soft);
 }
 .criteria-grid {
   display: grid;
@@ -617,13 +622,13 @@ section { padding: 8rem 3rem; position: relative; }
   align-items: flex-start;
   padding: 1.5rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255,255,255,0.04);
-  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(26,26,26,0.08);
+  background: rgba(255,255,255,0.2);
   transition: all 0.4s ease;
 }
 .criterion:hover {
-  border-color: rgba(108,92,231,0.3);
-  background: rgba(108,92,231,0.05);
+  border-color: rgba(26,26,26,0.2);
+  background: rgba(255,255,255,0.35);
 }
 .criterion-num {
   font-family: 'Space Mono', monospace;
@@ -648,7 +653,7 @@ section { padding: 8rem 3rem; position: relative; }
 
 /* FESTIVAL */
 .festival-section {
-  background: linear-gradient(135deg, rgba(255,77,0,0.08), rgba(0,229,160,0.05));
+  background: var(--bg-softer);
   position: relative;
 }
 .festival-content {
@@ -660,10 +665,10 @@ section { padding: 8rem 3rem; position: relative; }
   line-height: 1.6;
   font-weight: 300;
   margin-bottom: 2rem;
-  color: rgba(245,245,240,0.9);
+  color: var(--text);
 }
 .festival-highlight strong {
-  color: var(--accent);
+  color: var(--accent2);
   font-weight: 600;
 }
 .festival-stats {
@@ -695,7 +700,7 @@ section { padding: 8rem 3rem; position: relative; }
 /* FORM SECTION             */
 /* ======================== */
 .form-section {
-  background: var(--dark-gray);
+  background: rgba(26,26,26,0.06);
   padding: 8rem 3rem;
   position: relative;
   overflow: hidden;
@@ -705,7 +710,7 @@ section { padding: 8rem 3rem; position: relative; }
   position: absolute;
   top: -200px; right: -200px;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(255,77,0,0.06), transparent 70%);
+  background: radial-gradient(circle, rgba(26,26,26,0.04), transparent 70%);
   border-radius: 50%;
 }
 .form-container {
@@ -724,21 +729,21 @@ section { padding: 8rem 3rem; position: relative; }
 }
 .track-option {
   padding: 2rem;
-  border: 1.5px solid rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(26,26,26,0.12);
   border-radius: 1rem;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255,255,255,0.2);
 }
 .track-option:hover {
-  border-color: rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.04);
+  border-color: rgba(26,26,26,0.2);
+  background: rgba(255,255,255,0.35);
 }
 .track-option.active {
-  border-color: var(--accent);
-  background: rgba(255,77,0,0.06);
+  border-color: var(--text);
+  background: rgba(255,255,255,0.4);
 }
 .track-option.active::before {
   content: '';
@@ -774,7 +779,7 @@ section { padding: 8rem 3rem; position: relative; }
 .progress-step {
   flex: 1;
   height: 3px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(26,26,26,0.12);
   position: relative;
   transition: background 0.5s ease;
 }
@@ -797,7 +802,7 @@ section { padding: 8rem 3rem; position: relative; }
   transition: color 0.3s;
 }
 .progress-step.active::before,
-.progress-step.completed::before { color: var(--white); }
+.progress-step.completed::before { color: var(--text); }
 
 /* Form steps */
 .form-step {
@@ -828,10 +833,10 @@ section { padding: 8rem 3rem; position: relative; }
   font-weight: 500;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
-  color: rgba(245,245,240,0.8);
+  color: var(--text);
 }
 .field label .required {
-  color: var(--accent);
+  color: var(--accent2);
   margin-left: 2px;
 }
 .field input,
@@ -839,10 +844,10 @@ section { padding: 8rem 3rem; position: relative; }
 .field textarea {
   width: 100%;
   padding: 0.9rem 1.2rem;
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.3);
+  border: 1.5px solid rgba(26,26,26,0.12);
   border-radius: 0.7rem;
-  color: var(--white);
+  color: var(--text);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.95rem;
   transition: all 0.3s ease;
@@ -851,13 +856,13 @@ section { padding: 8rem 3rem; position: relative; }
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: var(--accent);
-  background: rgba(255,77,0,0.04);
-  box-shadow: 0 0 0 3px rgba(255,77,0,0.08);
+  border-color: var(--text);
+  background: rgba(255,255,255,0.45);
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
 }
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgba(255,255,255,0.2);
+  color: rgba(26,26,26,0.2);
 }
 .field select {
   appearance: none;
@@ -867,8 +872,8 @@ section { padding: 8rem 3rem; position: relative; }
   padding-right: 2.5rem;
 }
 .field select option {
-  background: var(--dark-gray);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--text);
 }
 .field textarea {
   min-height: 120px;
@@ -897,7 +902,7 @@ section { padding: 8rem 3rem; position: relative; }
 }
 .radio-option, .checkbox-option {
   padding: 0.6rem 1.2rem;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(26,26,26,0.12);
   border-radius: 2rem;
   cursor: pointer;
   font-size: 0.85rem;
@@ -906,18 +911,18 @@ section { padding: 8rem 3rem; position: relative; }
   font-weight: 400;
 }
 .radio-option:hover, .checkbox-option:hover {
-  border-color: rgba(255,255,255,0.25);
+  border-color: rgba(26,26,26,0.3);
 }
 .radio-option.selected {
-  border-color: var(--accent);
-  background: rgba(255,77,0,0.1);
-  color: var(--accent);
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
   font-weight: 500;
 }
 .checkbox-option.selected {
-  border-color: var(--accent2);
-  background: rgba(0,229,160,0.1);
-  color: var(--accent2);
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
   font-weight: 500;
 }
 
@@ -932,7 +937,7 @@ section { padding: 8rem 3rem; position: relative; }
   align-items: center;
   margin-top: 2.5rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(26,26,26,0.08);
 }
 .btn-back {
   display: inline-flex;
@@ -941,7 +946,7 @@ section { padding: 8rem 3rem; position: relative; }
   padding: 0.8rem 1.5rem;
   background: transparent;
   color: var(--gray);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(26,26,26,0.12);
   border-radius: 2rem;
   font-size: 0.85rem;
   cursor: pointer;
@@ -949,16 +954,16 @@ section { padding: 8rem 3rem; position: relative; }
   transition: all 0.3s;
 }
 .btn-back:hover {
-  color: var(--white);
-  border-color: rgba(255,255,255,0.3);
+  color: var(--text);
+  border-color: rgba(26,26,26,0.25);
 }
 .btn-next {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem 2rem;
-  background: var(--accent);
-  color: var(--black);
+  background: var(--text);
+  color: var(--bg);
   border: none;
   border-radius: 2rem;
   font-size: 0.9rem;
@@ -969,7 +974,7 @@ section { padding: 8rem 3rem; position: relative; }
 }
 .btn-next:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 25px rgba(255,77,0,0.3);
+  box-shadow: 0 6px 25px rgba(26,26,26,0.2);
 }
 .btn-submit {
   background: var(--accent2);
@@ -989,8 +994,8 @@ section { padding: 8rem 3rem; position: relative; }
 .success-icon {
   width: 80px; height: 80px;
   border-radius: 50%;
-  background: rgba(0,229,160,0.1);
-  border: 2px solid var(--accent2);
+  background: rgba(0,77,64,0.1);
+  border: 2px solid var(--accent3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1018,8 +1023,8 @@ section { padding: 8rem 3rem; position: relative; }
 
 /* INFO */
 .info-section {
-  background: var(--dark-gray);
-  border-top: 1px solid rgba(255,255,255,0.05);
+  background: rgba(26,26,26,0.08);
+  border-top: 1px solid rgba(26,26,26,0.12);
 }
 .info-grid {
   display: grid;
@@ -1045,13 +1050,13 @@ section { padding: 8rem 3rem; position: relative; }
   text-decoration: none;
   transition: color 0.3s;
 }
-.info-block a:hover { color: var(--white); }
+.info-block a:hover { color: var(--accent2); }
 
 /* FOOTER */
 footer {
   padding: 3rem;
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(26,26,26,0.08);
 }
 .footer-logos {
   display: flex;
@@ -1070,7 +1075,7 @@ footer {
 }
 .footer-copy {
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.2);
+  color: rgba(26,26,26,0.2);
   font-family: 'Space Mono', monospace;
 }
 
@@ -1240,7 +1245,7 @@ footer {
         <br>
         <p>Il POD è una piattaforma culturale dedicata al podcasting italiano che legge il presente attraverso le opere audio che hanno contribuito a orientare il dibattito pubblico, l'immaginario collettivo e le forme del racconto contemporaneo.</p>
         <br>
-        <p>Da questo contesto nasce la <strong style="color:var(--accent)">Piacenza Podcast Academy</strong>: un percorso formativo rivolto a chi ha tra i 14 e i 25 anni — dentro e fuori dalle scuole — pensato per avvicinare le nuove generazioni ai linguaggi del podcasting come strumento di espressione, analisi critica e partecipazione culturale.</p>
+        <p>Da questo contesto nasce la <strong style="color:var(--accent2)">Piacenza Podcast Academy</strong>: un percorso formativo rivolto a chi ha tra i 14 e i 25 anni — dentro e fuori dalle scuole — pensato per avvicinare le nuove generazioni ai linguaggi del podcasting come strumento di espressione, analisi critica e partecipazione culturale.</p>
       </div>
     </div>
     <div class="about-visual reveal">
@@ -1477,7 +1482,7 @@ footer {
   <div class="form-container">
     <div class="reveal">
       <div class="section-label">Candidatura</div>
-      <h2 class="section-title">La tua voce <span style="color:var(--accent)">conta.</span></h2>
+      <h2 class="section-title">La tua voce <span style="color:var(--accent2)">conta.</span></h2>
       <p class="section-text" style="margin-bottom:0.5rem;">La Piacenza Podcast Academy è aperta a chi ha tra i 14 e i 25 anni. Puoi candidarti come singolo oppure attraverso la tua scuola. Scegli il tuo percorso e compila il modulo: le candidature verranno valutate e riceverai una risposta nei giorni successivi alla chiusura della call.</p>
       <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--accent);letter-spacing:0.1em;margin-top:1rem;">Scadenza: 28 febbraio 2026</p>
     </div>
@@ -1588,14 +1593,14 @@ footer {
       <div class="form-step" id="ind-step-3">
         <h3 class="form-step-title">Disponibilità e consenso</h3>
         <p class="form-step-sub">Il percorso si articola in sei appuntamenti obbligatori, tutti a Piacenza, tra aprile e settembre 2026.</p>
-        <div class="field" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
+        <div class="field" style="background:rgba(255,255,255,0.3);border:1px solid rgba(26,26,26,0.1);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
           <p style="font-size:0.85rem;color:var(--gray);line-height:1.8;font-weight:300;">
-            <strong style="color:var(--white);">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
-            <strong style="color:var(--white);">10 maggio</strong> — Produzione Pratica Base<br>
-            <strong style="color:var(--white);">14 giugno</strong> — Specializzazione e Impostazione<br>
-            <strong style="color:var(--white);">20 settembre</strong> — Specializzazione e Finalizzazione<br>
-            <strong style="color:var(--white);">23 settembre</strong> — Briefing operativo<br>
-            <strong style="color:var(--white);">24–27 settembre</strong> — Redazione live durante il Festival
+            <strong style="color:var(--text);font-weight:800;">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
+            <strong style="color:var(--text);font-weight:800;">10 maggio</strong> — Produzione Pratica Base<br>
+            <strong style="color:var(--text);font-weight:800;">14 giugno</strong> — Specializzazione e Impostazione<br>
+            <strong style="color:var(--text);font-weight:800;">20 settembre</strong> — Specializzazione e Finalizzazione<br>
+            <strong style="color:var(--text);font-weight:800;">23 settembre</strong> — Briefing operativo<br>
+            <strong style="color:var(--text);font-weight:800;">24–27 settembre</strong> — Redazione live durante il Festival
           </p>
         </div>
         <div class="field">
@@ -1613,7 +1618,7 @@ footer {
         </div>
         <div class="field">
           <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('ind-privacy')">
-            <span id="ind-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span id="ind-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(26,26,26,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
             <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Autorizzo il trattamento dei dati personali ai sensi del GDPR (Regolamento UE 2016/679) per le finalità connesse alla selezione e all'organizzazione della Piacenza Podcast Academy. <span class="required">*</span></span>
           </label>
         </div>
@@ -1778,14 +1783,14 @@ footer {
       <div class="form-step" id="sch-step-5">
         <h3 class="form-step-title">Disponibilità e consenso</h3>
         <p class="form-step-sub">Il percorso si articola in sei appuntamenti obbligatori, tutti a Piacenza.</p>
-        <div class="field" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
+        <div class="field" style="background:rgba(255,255,255,0.3);border:1px solid rgba(26,26,26,0.1);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
           <p style="font-size:0.85rem;color:var(--gray);line-height:1.8;font-weight:300;">
-            <strong style="color:var(--white);">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
-            <strong style="color:var(--white);">10 maggio</strong> — Produzione Pratica Base<br>
-            <strong style="color:var(--white);">14 giugno</strong> — Specializzazione e Impostazione<br>
-            <strong style="color:var(--white);">20 settembre</strong> — Specializzazione e Finalizzazione<br>
-            <strong style="color:var(--white);">23 settembre</strong> — Briefing operativo<br>
-            <strong style="color:var(--white);">24–27 settembre</strong> — Redazione live durante il Festival
+            <strong style="color:var(--text);font-weight:800;">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
+            <strong style="color:var(--text);font-weight:800;">10 maggio</strong> — Produzione Pratica Base<br>
+            <strong style="color:var(--text);font-weight:800;">14 giugno</strong> — Specializzazione e Impostazione<br>
+            <strong style="color:var(--text);font-weight:800;">20 settembre</strong> — Specializzazione e Finalizzazione<br>
+            <strong style="color:var(--text);font-weight:800;">23 settembre</strong> — Briefing operativo<br>
+            <strong style="color:var(--text);font-weight:800;">24–27 settembre</strong> — Redazione live durante il Festival
           </p>
         </div>
         <div class="field">
@@ -1803,13 +1808,13 @@ footer {
         </div>
         <div class="field">
           <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('sch-autorizzazione')">
-            <span id="sch-autorizzazione-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span id="sch-autorizzazione-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(26,26,26,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
             <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Il/la docente referente dichiara di essere autorizzato/a dalla dirigenza scolastica a presentare questa manifestazione di interesse. <span class="required">*</span></span>
           </label>
         </div>
         <div class="field" style="margin-top:0.5rem;">
           <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('sch-privacy')">
-            <span id="sch-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span id="sch-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(26,26,26,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
             <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Autorizzo il trattamento dei dati personali ai sensi del GDPR (Regolamento UE 2016/679) per le finalità connesse alla selezione e all'organizzazione della Piacenza Podcast Academy. <span class="required">*</span></span>
           </label>
         </div>
@@ -1848,9 +1853,9 @@ footer {
       </div>
       <div class="info-block reveal">
         <h3>Contatti</h3>
-        <p>Per ulteriori informazioni scrivere a <a href="mailto:segreteriailpod@tlon.it">segreteriailpod@tlon.it</a> indicando nell'oggetto <strong style="color:var(--white)">OPEN CALL — POD</strong>.</p>
+        <p>Per ulteriori informazioni scrivere a <a href="mailto:segreteriailpod@tlon.it">segreteriailpod@tlon.it</a> indicando nell'oggetto <strong style="color:var(--text);font-weight:800">OPEN CALL — POD</strong>.</p>
         <br>
-        <p>La candidatura va presentata entro il <strong style="color:var(--accent)">28 febbraio 2026</strong>.</p>
+        <p>La candidatura va presentata entro il <strong style="color:var(--accent2)">28 febbraio 2026</strong>.</p>
       </div>
     </div>
   </div>
@@ -1903,7 +1908,7 @@ function drawWave() {
   const centerY = canvas.height / 2;
   for (let w = 0; w < 3; w++) {
     ctx.beginPath();
-    ctx.strokeStyle = w === 0 ? '#ff4d00' : w === 1 ? '#00e5a0' : '#6c5ce7';
+    ctx.strokeStyle = w === 0 ? '#1a1a1a' : w === 1 ? '#ff3d00' : '#004d40';
     ctx.lineWidth = 1.5;
     for (let x = 0; x < canvas.width; x++) {
       const y = centerY + Math.sin((x*0.003)+waveOffset+(w*2))*80 + Math.sin((x*0.007)+waveOffset*0.5+(w*1.5))*40 + Math.sin((x*0.015)+waveOffset*1.5)*20;
@@ -2022,7 +2027,7 @@ function toggleCheckbox(id) {
     box.textContent = '✓';
     box.style.color = 'var(--accent2)';
   } else {
-    box.style.borderColor = 'rgba(255,255,255,0.2)';
+    box.style.borderColor = 'rgba(26,26,26,0.2)';
     box.style.background = 'transparent';
     box.textContent = '';
   }
