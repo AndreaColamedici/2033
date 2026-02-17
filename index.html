@@ -1933,32 +1933,62 @@ function updateProgress(prefix, currentStep) {
   });
 }
 
+// ← INSERISCI QUI L'URL DEL TUO GOOGLE APPS SCRIPT (vedi istruzioni nel file apps-script.js)
+const FORM_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbz_Uwv0BFz6pL8pEIGEvweWnquW-hkGWPCEbV-BAS4cee153hNZ3KbDTIIadv-2W49-VA/exec';
+
 function submitForm(track) {
   // Collect form data
   const data = {};
-  const prefix = track === 'individual' ? 'ind' : 'sch';
+  const formId = track === 'individual' ? 'formIndividual' : 'formSchool';
 
   // Gather all inputs
-  document.querySelectorAll(`#form${track === 'individual' ? 'Individual' : 'School'} input, #form${track === 'individual' ? 'Individual' : 'School'} select, #form${track === 'individual' ? 'Individual' : 'School'} textarea`).forEach(el => {
+  document.querySelectorAll(`#${formId} input, #${formId} select, #${formId} textarea`).forEach(el => {
     if (el.id && el.value) data[el.id] = el.value;
   });
 
   // Gather radio selections
-  document.querySelectorAll(`#form${track === 'individual' ? 'Individual' : 'School'} .radio-option.selected`).forEach(el => {
+  document.querySelectorAll(`#${formId} .radio-option.selected`).forEach(el => {
     data[el.parentElement.id] = el.getAttribute('data-value');
+  });
+
+  // Gather checkbox states
+  document.querySelectorAll(`#${formId} [id$="-box"]`).forEach(el => {
+    if (el.textContent === '✓') data[el.id] = 'sì';
   });
 
   data.track = track;
   data.timestamp = new Date().toISOString();
 
-  console.log('📋 Candidatura:', JSON.stringify(data, null, 2));
+  // Disable submit button
+  const submitBtn = document.querySelector(`#${formId} .btn-submit`);
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Invio in corso...';
+  }
 
-  // Show success
-  document.getElementById('formIndividual').style.display = 'none';
-  document.getElementById('formSchool').style.display = 'none';
-  document.getElementById('trackSelector').style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
-  document.getElementById('candidati').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Send to backend
+  fetch(FORM_BACKEND_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    // Show success
+    document.getElementById('formIndividual').style.display = 'none';
+    document.getElementById('formSchool').style.display = 'none';
+    document.getElementById('trackSelector').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+    document.getElementById('candidati').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  })
+  .catch(err => {
+    console.error('Errore invio:', err);
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Invia candidatura';
+    }
+    alert('Si è verificato un errore nell\'invio. Riprova tra qualche istante.');
+  });
 }
 </script>
 </body>
