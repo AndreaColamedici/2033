@@ -10,18 +10,18 @@
 <style>
 :root {
   --black: #1a1a1a;
-  --white: #fffdf0;
-  --bg: #f5c518;
-  --bg-soft: #e8b800;
-  --bg-softer: #d4a800;
-  --accent: #1a1a1a;
-  --accent2: #ff3d00;
-  --accent3: #004d40;
-  --gray: #4a4a4a;
-  --dark-gray: rgba(26,26,26,0.06);
-  --mid-gray: rgba(26,26,26,0.1);
+  --white: #ffffff;
+  --bg: #f8f6f1;
+  --bg-soft: #f0ede6;
+  --bg-softer: #e8e4dc;
+  --accent: #ff3d00;
+  --accent2: #1a1a1a;
+  --accent3: #ff6b3d;
+  --gray: #888;
+  --dark-gray: #1a1a1a;
+  --mid-gray: #2a2a2a;
   --text: #1a1a1a;
-  --text-soft: #3a3a3a;
+  --text-soft: #555;
   --error: #ff4757;
 }
 
@@ -73,8 +73,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   backdrop-filter: blur(20px);
-  background: rgba(245,197,24,0.85);
-  border-bottom: 1px solid rgba(26,26,26,0.1);
+  background: rgba(248,246,241,0.9);
+  border-bottom: 1px solid rgba(26,26,26,0.08);
   transition: transform 0.4s ease;
 }
 nav.hidden { transform: translateY(-100%); }
@@ -100,8 +100,8 @@ nav.hidden { transform: translateY(-100%); }
 }
 .nav-links a:hover { color: var(--text); }
 .nav-cta {
-  background: var(--text) !important;
-  color: var(--bg) !important;
+  background: var(--accent) !important;
+  color: var(--white) !important;
   padding: 0.5rem 1.2rem;
   border-radius: 2rem;
   font-weight: 600 !important;
@@ -127,7 +127,7 @@ nav.hidden { transform: translateY(-100%); }
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 0;
-  opacity: 0.12;
+  opacity: 0.08;
 }
 .float-icons {
   position: absolute;
@@ -213,8 +213,8 @@ nav.hidden { transform: translateY(-100%); }
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2.5rem;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--white);
   text-decoration: none;
   border-radius: 3rem;
   font-weight: 600;
@@ -389,7 +389,7 @@ section { padding: 8rem 3rem; position: relative; }
   margin: 4rem auto 0;
 }
 .learn-card {
-  background: rgba(255,255,255,0.25);
+  background: var(--white);
   border: 1px solid rgba(26,26,26,0.08);
   border-radius: 1rem;
   padding: 2rem;
@@ -474,7 +474,7 @@ section { padding: 8rem 3rem; position: relative; }
   margin-top: 2rem;
 }
 .formatore-card {
-  background: rgba(255,255,255,0.25);
+  background: var(--white);
   border: 1px solid rgba(26,26,26,0.08);
   border-radius: 1rem;
   padding: 2rem;
@@ -623,12 +623,12 @@ section { padding: 8rem 3rem; position: relative; }
   padding: 1.5rem;
   border-radius: 1rem;
   border: 1px solid rgba(26,26,26,0.08);
-  background: rgba(255,255,255,0.2);
+  background: var(--white);
   transition: all 0.4s ease;
 }
 .criterion:hover {
   border-color: rgba(26,26,26,0.2);
-  background: rgba(255,255,255,0.35);
+  background: var(--white);
 }
 .criterion-num {
   font-family: 'Space Mono', monospace;
@@ -735,15 +735,17 @@ section { padding: 8rem 3rem; position: relative; }
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
-  background: rgba(255,255,255,0.2);
+  background: var(--white);
 }
 .track-option:hover {
   border-color: rgba(26,26,26,0.2);
-  background: rgba(255,255,255,0.35);
+  background: var(--white);
+  box-shadow: 0 4px 15px rgba(26,26,26,0.08);
 }
 .track-option.active {
-  border-color: var(--text);
-  background: rgba(255,255,255,0.4);
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 4px 20px rgba(255,61,0,0.1);
 }
 .track-option.active::before {
   content: '';
@@ -844,7 +846,7 @@ section { padding: 8rem 3rem; position: relative; }
 .field textarea {
   width: 100%;
   padding: 0.9rem 1.2rem;
-  background: rgba(255,255,255,0.3);
+  background: var(--white);
   border: 1.5px solid rgba(26,26,26,0.12);
   border-radius: 0.7rem;
   color: var(--text);
@@ -856,13 +858,13 @@ section { padding: 8rem 3rem; position: relative; }
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: var(--text);
-  background: rgba(255,255,255,0.45);
-  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(255,61,0,0.08);
 }
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgba(26,26,26,0.2);
+  color: #bbb;
 }
 .field select {
   appearance: none;
@@ -914,15 +916,15 @@ section { padding: 8rem 3rem; position: relative; }
   border-color: rgba(26,26,26,0.3);
 }
 .radio-option.selected {
-  border-color: var(--text);
-  background: var(--text);
-  color: var(--bg);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--white);
   font-weight: 500;
 }
 .checkbox-option.selected {
-  border-color: var(--text);
-  background: var(--text);
-  color: var(--bg);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--white);
   font-weight: 500;
 }
 
@@ -962,8 +964,8 @@ section { padding: 8rem 3rem; position: relative; }
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem 2rem;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--dark-gray);
+  color: var(--white);
   border: none;
   border-radius: 2rem;
   font-size: 0.9rem;
@@ -974,10 +976,10 @@ section { padding: 8rem 3rem; position: relative; }
 }
 .btn-next:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 25px rgba(26,26,26,0.2);
+  box-shadow: 0 6px 25px rgba(26,26,26,0.15);
 }
 .btn-submit {
-  background: var(--accent2);
+  background: var(--accent);
 }
 .btn-submit:hover {
   box-shadow: 0 6px 25px rgba(0,229,160,0.3);
@@ -994,8 +996,8 @@ section { padding: 8rem 3rem; position: relative; }
 .success-icon {
   width: 80px; height: 80px;
   border-radius: 50%;
-  background: rgba(0,77,64,0.1);
-  border: 2px solid var(--accent3);
+  background: rgba(255,61,0,0.08);
+  border: 2px solid var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1245,7 +1247,7 @@ footer {
         <br>
         <p>Il POD è una piattaforma culturale dedicata al podcasting italiano che legge il presente attraverso le opere audio che hanno contribuito a orientare il dibattito pubblico, l'immaginario collettivo e le forme del racconto contemporaneo.</p>
         <br>
-        <p>Da questo contesto nasce la <strong style="color:var(--accent2)">Piacenza Podcast Academy</strong>: un percorso formativo rivolto a chi ha tra i 14 e i 25 anni — dentro e fuori dalle scuole — pensato per avvicinare le nuove generazioni ai linguaggi del podcasting come strumento di espressione, analisi critica e partecipazione culturale.</p>
+        <p>Da questo contesto nasce la <strong style="color:var(--accent)">Piacenza Podcast Academy</strong>: un percorso formativo rivolto a chi ha tra i 14 e i 25 anni — dentro e fuori dalle scuole — pensato per avvicinare le nuove generazioni ai linguaggi del podcasting come strumento di espressione, analisi critica e partecipazione culturale.</p>
       </div>
     </div>
     <div class="about-visual reveal">
@@ -1482,7 +1484,7 @@ footer {
   <div class="form-container">
     <div class="reveal">
       <div class="section-label">Candidatura</div>
-      <h2 class="section-title">La tua voce <span style="color:var(--accent2)">conta.</span></h2>
+      <h2 class="section-title">La tua voce <span style="color:var(--accent)">conta.</span></h2>
       <p class="section-text" style="margin-bottom:0.5rem;">La Piacenza Podcast Academy è aperta a chi ha tra i 14 e i 25 anni. Puoi candidarti come singolo oppure attraverso la tua scuola. Scegli il tuo percorso e compila il modulo: le candidature verranno valutate e riceverai una risposta nei giorni successivi alla chiusura della call.</p>
       <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--accent);letter-spacing:0.1em;margin-top:1rem;">Scadenza: 28 febbraio 2026</p>
     </div>
@@ -1593,7 +1595,7 @@ footer {
       <div class="form-step" id="ind-step-3">
         <h3 class="form-step-title">Disponibilità e consenso</h3>
         <p class="form-step-sub">Il percorso si articola in sei appuntamenti obbligatori, tutti a Piacenza, tra aprile e settembre 2026.</p>
-        <div class="field" style="background:rgba(255,255,255,0.3);border:1px solid rgba(26,26,26,0.1);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
+        <div class="field" style="background:#fff;border:1px solid rgba(26,26,26,0.1);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
           <p style="font-size:0.85rem;color:var(--gray);line-height:1.8;font-weight:300;">
             <strong style="color:var(--text);font-weight:800;">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
             <strong style="color:var(--text);font-weight:800;">10 maggio</strong> — Produzione Pratica Base<br>
@@ -1783,7 +1785,7 @@ footer {
       <div class="form-step" id="sch-step-5">
         <h3 class="form-step-title">Disponibilità e consenso</h3>
         <p class="form-step-sub">Il percorso si articola in sei appuntamenti obbligatori, tutti a Piacenza.</p>
-        <div class="field" style="background:rgba(255,255,255,0.3);border:1px solid rgba(26,26,26,0.1);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
+        <div class="field" style="background:#fff;border:1px solid rgba(26,26,26,0.1);border-radius:0.8rem;padding:1.5rem;margin-bottom:1.5rem;">
           <p style="font-size:0.85rem;color:var(--gray);line-height:1.8;font-weight:300;">
             <strong style="color:var(--text);font-weight:800;">12 aprile</strong> — Ascolto & Idea, Scrittura & Voce<br>
             <strong style="color:var(--text);font-weight:800;">10 maggio</strong> — Produzione Pratica Base<br>
@@ -1855,7 +1857,7 @@ footer {
         <h3>Contatti</h3>
         <p>Per ulteriori informazioni scrivere a <a href="mailto:segreteriailpod@tlon.it">segreteriailpod@tlon.it</a> indicando nell'oggetto <strong style="color:var(--text);font-weight:800">OPEN CALL — POD</strong>.</p>
         <br>
-        <p>La candidatura va presentata entro il <strong style="color:var(--accent2)">28 febbraio 2026</strong>.</p>
+        <p>La candidatura va presentata entro il <strong style="color:var(--accent)">28 febbraio 2026</strong>.</p>
       </div>
     </div>
   </div>
@@ -1908,7 +1910,7 @@ function drawWave() {
   const centerY = canvas.height / 2;
   for (let w = 0; w < 3; w++) {
     ctx.beginPath();
-    ctx.strokeStyle = w === 0 ? '#1a1a1a' : w === 1 ? '#ff3d00' : '#004d40';
+    ctx.strokeStyle = w === 0 ? '#ff3d00' : w === 1 ? '#1a1a1a' : '#ff6b3d';
     ctx.lineWidth = 1.5;
     for (let x = 0; x < canvas.width; x++) {
       const y = centerY + Math.sin((x*0.003)+waveOffset+(w*2))*80 + Math.sin((x*0.007)+waveOffset*0.5+(w*1.5))*40 + Math.sin((x*0.015)+waveOffset*1.5)*20;
