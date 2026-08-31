@@ -1006,6 +1006,37 @@ section { padding: 8rem 3rem; position: relative; }
 }
 .spacer { flex: 1; }
 
+/* Validazione */
+.field.invalid input,
+.field.invalid select,
+.field.invalid textarea {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(255,71,87,0.10);
+}
+.field.invalid .radio-group .radio-option {
+  border-color: rgba(255,71,87,0.45);
+}
+.field-error {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--error);
+  margin-top: 0.45rem;
+}
+.form-alert {
+  display: none;
+  margin-top: 1.5rem;
+  padding: 1rem 1.3rem;
+  border: 1px solid rgba(255,71,87,0.3);
+  background: rgba(255,71,87,0.06);
+  border-radius: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--error);
+}
+.form-alert.show { display: block; }
+
 /* Success state */
 .form-success {
   display: none;
@@ -1314,7 +1345,7 @@ footer {
     <a href="#impara">Competenze</a>
     <a href="#selezione">Selezione</a>
     <a href="#festival">Festival</a>
-    <a href="#candidati" class="nav-cta">Candidature chiuse</a>
+    <a href="#candidati" class="nav-cta">Resta aggiornato</a>
   </div>
 </nav>
 
@@ -1325,7 +1356,7 @@ footer {
   <div class="hero-content">
     <div class="hero-badge">
       <span class="pulse"></span>
-      Partecipazione gratuita · Open Call 2026 · 14/25 anni
+      Partecipazione gratuita · 14/25 anni
     </div>
     <h1>
       <span class="line">Piacenza</span>
@@ -1336,8 +1367,9 @@ footer {
       Un percorso formativo gratuito e immersivo per chi ha tra i 14 e i 25 anni e vuole entrare nei linguaggi del podcasting, dal primo ascolto alla redazione live di un festival.
     </p>
     <div class="hero-ctas">
-      <a href="#candidati" class="btn-primary" style="opacity:0.6;pointer-events:none;">
-        Candidature chiuse
+      <a href="#candidati" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 6l8 6 8-6"/></svg>
+        Lascia il tuo contatto
       </a>
       <a href="#percorso" class="btn-secondary">
         Scopri il percorso
@@ -1622,10 +1654,176 @@ footer {
 <!-- ======================== -->
 <section class="form-section" id="candidati">
   <div class="form-container">
-    <div class="reveal" style="text-align:center;padding:4rem 2rem;">
-      <div class="section-label">Candidatura</div>
-      <h2 class="section-title">Le candidature sono <span style="color:var(--accent)">chiuse.</span></h2>
-      <p class="section-text" style="margin-bottom:1.5rem;max-width:600px;margin-left:auto;margin-right:auto;">La call per la Piacenza Podcast Academy si è chiusa il 30 marzo 2026. Grazie a tutte le persone che hanno inviato la propria candidatura: i selezionati verranno contattati nei prossimi giorni.</p>
+    <div class="reveal">
+      <div class="section-label">Manifestazione di interesse</div>
+      <h2 class="section-title">Le candidature non sono ancora aperte. <span style="color:var(--accent)">Ma puoi già farti trovare.</span></h2>
+      <p class="section-text" style="margin-bottom:0.5rem;">La call per la prossima edizione della Piacenza Podcast Academy verrà annunciata su questa pagina. Nel frattempo puoi lasciare il tuo contatto: sarai tra i primi a sapere quando si apre, riceverai le informazioni operative appena definite e, se vuoi, puoi già raccontarci chi sei o farci una proposta. Chi scrive adesso viene letto.</p>
+      <p id="deadlineNote" style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--accent);letter-spacing:0.1em;margin-top:1rem;"></p>
+    </div>
+
+    <!-- Track selector -->
+    <div class="track-selector reveal" id="trackSelector">
+      <div class="track-option" data-track="individual" onclick="selectTrack('individual')">
+        <span class="track-icon">🎤</span>
+        <h3>A titolo personale</h3>
+        <p>Hai tra i 14 e i 25 anni e vuoi partecipare in prima persona. Puoi essere studente, universitario, o semplicemente una persona curiosa.</p>
+      </div>
+      <div class="track-option" data-track="school" onclick="selectTrack('school')">
+        <span class="track-icon">🏫</span>
+        <h3>Per una scuola</h3>
+        <p>Sei un docente e vuoi tenere aperta la possibilità di portare una delegazione di studentesse e studenti nella prossima edizione.</p>
+      </div>
+    </div>
+
+    <!-- ===== INTERESSE: INDIVIDUALE ===== -->
+    <div id="formIndividual" style="display:none;">
+      <div class="form-step active" id="ind-step-1">
+        <h3 class="form-step-title">Chi sei</h3>
+        <p class="form-step-sub">Servono poche informazioni: quelle per riconoscerti e per riuscire ad avvisarti. Il resto lo chiederemo al momento della candidatura vera e propria.</p>
+        <div class="field-row">
+          <div class="field">
+            <label>Nome <span class="required">*</span></label>
+            <input type="text" id="ind-nome" placeholder="Il tuo nome" required>
+          </div>
+          <div class="field">
+            <label>Cognome <span class="required">*</span></label>
+            <input type="text" id="ind-cognome" placeholder="Il tuo cognome" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" id="ind-email" placeholder="la-tua@email.it" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Data di nascita <span class="required">*</span></label>
+            <input type="date" id="ind-nascita" required>
+          </div>
+          <div class="field">
+            <label>Città di residenza <span class="required">*</span></label>
+            <input type="text" id="ind-citta" placeholder="Es. Piacenza" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Telefono <span style="color:var(--gray);font-weight:300;">(facoltativo)</span></label>
+          <input type="tel" id="ind-telefono" placeholder="+39 ...">
+        </div>
+        <div class="field">
+          <label>Cosa fai nella vita? <span class="required">*</span></label>
+          <div class="radio-group" id="ind-occupazione" data-required="true">
+            <div class="radio-option" data-value="Studente scuola superiore" onclick="selectRadio(this)">Studente scuola superiore</div>
+            <div class="radio-option" data-value="Studente universitario" onclick="selectRadio(this)">Universitario/a</div>
+            <div class="radio-option" data-value="Lavoro" onclick="selectRadio(this)">Lavoro</div>
+            <div class="radio-option" data-value="Altro" onclick="selectRadio(this)">Altro</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Vuoi dirci qualcosa? <span style="color:var(--gray);font-weight:300;">(facoltativo)</span></label>
+          <textarea id="ind-proposta" placeholder="Perché ti interessa il podcasting, cosa vorresti raccontare, una proposta che hai in testa, una domanda che vuoi farci. Non è una candidatura: scrivi liberamente." maxlength="1200" oninput="updateCharCount(this, 'ind-prop-count')"></textarea>
+          <div class="char-count" id="ind-prop-count">0 / 1200</div>
+        </div>
+        <div class="field" data-check="ind-privacy">
+          <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('ind-privacy')">
+            <span id="ind-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(26,26,26,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Autorizzo il trattamento dei dati personali ai sensi del GDPR (Regolamento UE 2016/679) per essere ricontattato in merito alla Piacenza Podcast Academy. <span class="required">*</span></span>
+          </label>
+        </div>
+        <div class="field" style="background:rgba(255,61,0,0.05);border:1px solid rgba(255,61,0,0.15);border-radius:0.8rem;padding:1.2rem 1.5rem;">
+          <p style="font-size:0.85rem;color:var(--text-soft);line-height:1.7;font-weight:300;margin:0;">
+            <strong style="color:var(--text);font-weight:600;">Questa non è una candidatura.</strong> Lasciare il contatto non impegna a nulla e non dà diritto a un posto: quando la call si apre riceverai il modulo di candidatura vero e proprio, con i criteri di selezione e le scadenze.
+          </p>
+        </div>
+        <div class="form-alert" id="ind-step-1-alert"></div>
+        <div class="form-nav">
+          <div class="spacer"></div>
+          <button class="btn-next btn-submit" onclick="submitForm('individual')">Tienimi aggiornato ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== INTERESSE: SCUOLA ===== -->
+    <div id="formSchool" style="display:none;">
+      <div class="form-step active" id="sch-step-1">
+        <h3 class="form-step-title">La scuola e il referente</h3>
+        <p class="form-step-sub">Poche informazioni per capire chi siete e per avvisarvi in tempo utile a organizzare la partecipazione, con l'anticipo che la programmazione scolastica richiede.</p>
+        <div class="field">
+          <label>Nome dell'istituto scolastico <span class="required">*</span></label>
+          <input type="text" id="sch-nome-istituto" placeholder="Es. Liceo Scientifico G. Marconi" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Città e provincia <span class="required">*</span></label>
+            <input type="text" id="sch-citta" placeholder="Es. Piacenza (PC)" required>
+          </div>
+          <div class="field">
+            <label>Tipologia di istituto <span class="required">*</span></label>
+            <select id="sch-tipologia" required>
+              <option value="" disabled selected>Seleziona...</option>
+              <option>Liceo classico</option>
+              <option>Liceo scientifico</option>
+              <option>Liceo linguistico</option>
+              <option>Liceo delle scienze umane</option>
+              <option>Liceo artistico</option>
+              <option>Liceo musicale e coreutico</option>
+              <option>Istituto tecnico</option>
+              <option>Istituto professionale</option>
+              <option>Altro</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Docente referente <span class="required">*</span></label>
+            <input type="text" id="sch-docente-nome" placeholder="Nome e cognome" required>
+          </div>
+          <div class="field">
+            <label>Materia <span style="color:var(--gray);font-weight:300;">(facoltativo)</span></label>
+            <input type="text" id="sch-docente-materia">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Email del referente <span class="required">*</span></label>
+            <input type="email" id="sch-docente-email" required>
+          </div>
+          <div class="field">
+            <label>Telefono <span style="color:var(--gray);font-weight:300;">(facoltativo)</span></label>
+            <input type="tel" id="sch-docente-tel" placeholder="+39 ...">
+          </div>
+        </div>
+        <div class="field">
+          <label>Quanti studenti pensereste di coinvolgere? <span style="color:var(--gray);font-weight:300;">(indicativo, facoltativo)</span></label>
+          <input type="number" id="sch-num-studenti" min="1" max="30" placeholder="Es. 8">
+        </div>
+        <div class="field">
+          <label>Volete dirci qualcosa? <span style="color:var(--gray);font-weight:300;">(facoltativo)</span></label>
+          <textarea id="sch-proposta" placeholder="Perché la vostra scuola è interessata, esperienze già fatte con audio, radio o giornalismo scolastico, vincoli di calendario da tenere presenti, domande da farci." maxlength="1200" oninput="updateCharCount(this, 'sch-prop-count')"></textarea>
+          <div class="char-count" id="sch-prop-count">0 / 1200</div>
+        </div>
+        <div class="field" data-check="sch-privacy">
+          <label style="display:flex;align-items:flex-start;gap:0.8rem;cursor:pointer;" onclick="toggleCheckbox('sch-privacy')">
+            <span id="sch-privacy-box" style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1.5px solid rgba(26,26,26,0.2);border-radius:4px;transition:all 0.3s;margin-top:2px;font-size:0.75rem;"></span>
+            <span style="font-size:0.85rem;font-weight:300;color:var(--gray);line-height:1.6;">Autorizzo il trattamento dei dati personali ai sensi del GDPR (Regolamento UE 2016/679) per essere ricontattato in merito alla Piacenza Podcast Academy. <span class="required">*</span></span>
+          </label>
+        </div>
+        <div class="field" style="background:rgba(255,61,0,0.05);border:1px solid rgba(255,61,0,0.15);border-radius:0.8rem;padding:1.2rem 1.5rem;">
+          <p style="font-size:0.85rem;color:var(--text-soft);line-height:1.7;font-weight:300;margin:0;">
+            <strong style="color:var(--text);font-weight:600;">Questa non è una candidatura.</strong> Segnalare l'interesse non impegna la scuola a nulla e non riserva posti: quando la call si apre riceverete il modulo di candidatura, con i criteri di selezione e le scadenze.
+          </p>
+        </div>
+        <div class="form-alert" id="sch-step-1-alert"></div>
+        <div class="form-nav">
+          <div class="spacer"></div>
+          <button class="btn-next btn-submit" onclick="submitForm('school')">Tenetemi aggiornato ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">Ti abbiamo in lista</h2>
+      <p class="success-text">Grazie. Quando le candidature per la prossima edizione si aprono, sei tra i primi a saperlo: ti scriviamo con il modulo, i criteri di selezione e il calendario del percorso. Se ci hai lasciato una proposta, la leggiamo.</p>
       <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--accent);letter-spacing:0.1em;margin-top:2rem;">Per qualsiasi domanda: segreteriailpod@tlon.it</p>
     </div>
   </div>
@@ -1650,7 +1848,7 @@ footer {
       <div class="info-block reveal">
         <h3>Contatti</h3>
         <p>Per ulteriori informazioni scrivere a <a href="mailto:segreteriailpod@tlon.it">segreteriailpod@tlon.it</a> indicando nell'oggetto <strong style="color:var(--text);font-weight:800">OPEN CALL - POD</strong>.</p>
-        <p>La candidatura va presentata entro il <strong style="color:var(--accent)">30 marzo 2026</strong>.</p>
+        <p>La call per la prossima edizione non è ancora aperta. Chi vuole essere avvisato quando si apre può lasciare il proprio contatto nel <a href="#candidati">modulo in questa pagina</a>.</p>
       </div>
     </div>
   </div>
@@ -1794,8 +1992,114 @@ const counterObserver = new IntersectionObserver((entries) => {
 statNumbers.forEach(el => counterObserver.observe(el));
 
 // ===== FORM LOGIC =====
+
+/* ------------------------------------------------------------------ *
+ * CONFIGURAZIONE EDIZIONE — unico blocco da toccare.                  *
+ *                                                                     *
+ * In questa fase il modulo NON è una candidatura: raccoglie contatti  *
+ * e proposte di chi vuole essere avvisato all'apertura della call.    *
+ *                                                                     *
+ * anno:         accompagna ogni invio, distingue le edizioni nel      *
+ *               foglio di raccolta condiviso con gli anni precedenti. *
+ * aperturaCall: null finché la data di apertura non è decisa.         *
+ *               Appena la si sa, scriverla come stringa               *
+ *               (es. 'gennaio 2027' oppure '15 gennaio 2027') e la    *
+ *               riga sotto il titolo si aggiorna da sola.             *
+ * ------------------------------------------------------------------ */
+const EDIZIONE = {
+  anno: '2027',
+  aperturaCall: null
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const note = document.getElementById('deadlineNote');
+  if (!note) return;
+  note.textContent = EDIZIONE.aperturaCall
+    ? 'Le candidature si aprono: ' + EDIZIONE.aperturaCall
+    : 'Apertura delle candidature: data in via di definizione';
+});
+
 let currentTrack = null;
 const checkboxStates = {};
+
+/* ===== VALIDAZIONE ===== */
+function clearErrors(stepEl) {
+  stepEl.querySelectorAll('.field.invalid').forEach(f => f.classList.remove('invalid'));
+  stepEl.querySelectorAll('.field-error').forEach(e => e.remove());
+  const alert = stepEl.querySelector('.form-alert');
+  if (alert) alert.classList.remove('show');
+}
+
+function markInvalid(fieldEl, msg) {
+  if (!fieldEl || fieldEl.classList.contains('invalid')) return;
+  fieldEl.classList.add('invalid');
+  const err = document.createElement('div');
+  err.className = 'field-error';
+  err.textContent = msg;
+  fieldEl.appendChild(err);
+}
+
+function isVisible(el) {
+  return !!(el.offsetParent || el.offsetWidth || el.offsetHeight);
+}
+
+function validateStep(stepEl) {
+  clearErrors(stepEl);
+  let firstBad = null;
+
+  // campi testuali obbligatori
+  stepEl.querySelectorAll('input[required], select[required], textarea[required]').forEach(el => {
+    if (!isVisible(el)) return;
+    const field = el.closest('.field');
+    const val = (el.value || '').trim();
+    if (!val) {
+      markInvalid(field, 'Campo obbligatorio');
+      firstBad = firstBad || field;
+    } else if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) {
+      markInvalid(field, 'Indirizzo email non valido');
+      firstBad = firstBad || field;
+    } else if (el.type === 'tel' && val.replace(/[^0-9]/g, '').length < 8) {
+      markInvalid(field, 'Numero di telefono non valido');
+      firstBad = firstBad || field;
+    } else if (el.type === 'date') {
+      const anni = (Date.now() - new Date(val).getTime()) / 31557600000;
+      if (isNaN(anni) || anni < 13 || anni > 30) {
+        markInvalid(field, 'Controlla la data: il percorso è rivolto a chi ha tra i 14 e i 25 anni');
+        firstBad = firstBad || field;
+      }
+    }
+  });
+
+  // gruppi radio obbligatori
+  stepEl.querySelectorAll('.radio-group[data-required]').forEach(group => {
+    if (!isVisible(group)) return;
+    if (!group.querySelector('.radio-option.selected')) {
+      const field = group.closest('.field');
+      markInvalid(field, 'Seleziona una risposta');
+      firstBad = firstBad || field;
+    }
+  });
+
+  // consensi obbligatori
+  stepEl.querySelectorAll('.field[data-check]').forEach(field => {
+    const key = field.getAttribute('data-check');
+    if (!checkboxStates[key]) {
+      markInvalid(field, 'Consenso obbligatorio');
+      firstBad = firstBad || field;
+    }
+  });
+
+  if (firstBad) {
+    const alert = stepEl.querySelector('.form-alert');
+    if (alert) {
+      alert.textContent = 'Alcuni campi obbligatori non sono compilati o contengono un valore non valido. Controlla i punti segnalati in rosso qui sopra.';
+      alert.classList.add('show');
+    }
+    firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return false;
+  }
+  return true;
+}
 
 function selectTrack(track) {
   currentTrack = track;
@@ -1809,10 +2113,22 @@ function selectTrack(track) {
 function selectRadio(el) {
   el.parentElement.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
+  const field = el.closest('.field');
+  if (field) {
+    field.classList.remove('invalid');
+    const err = field.querySelector('.field-error');
+    if (err) err.remove();
+  }
 }
 
 function toggleCheckbox(id) {
   checkboxStates[id] = !checkboxStates[id];
+  const field = document.querySelector(`.field[data-check="${id}"]`);
+  if (field && checkboxStates[id]) {
+    field.classList.remove('invalid');
+    const err = field.querySelector('.field-error');
+    if (err) err.remove();
+  }
   const box = document.getElementById(id + '-box');
   if (checkboxStates[id]) {
     box.style.borderColor = 'var(--accent)';
@@ -1842,9 +2158,13 @@ function updateCharCount(textarea, countId) {
   else el.classList.remove('over');
 }
 
+/* nextStep/prevStep/updateProgress governano il modulo multi-step della
+   candidatura vera e propria. In questa fase il modulo è a passaggio unico
+   e non vengono chiamati: restano pronti per la riapertura della call. */
 function nextStep(prefix, step) {
   const current = document.querySelector(`#${prefix}-step-${step-1}`);
   const next = document.querySelector(`#${prefix}-step-${step}`);
+  if (current && !validateStep(current)) return;
   if (current) current.classList.remove('active');
   if (next) { next.classList.add('active'); next.style.animation = 'none'; next.offsetHeight; next.style.animation = 'fadeInUp 0.5s ease'; }
   updateProgress(prefix, step);
@@ -1874,9 +2194,14 @@ function updateProgress(prefix, currentStep) {
 const FORM_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwSxZLKQndWVD0hDFJIvKVKb8YoQGRMn3xi_xfdMnnGsahZCWYfGBSk2ri5Ac2jVRl2/exec';
 
 function submitForm(track) {
+  const formId = track === 'individual' ? 'formIndividual' : 'formSchool';
+
+  // Valida l'ultimo step prima di inviare
+  const lastStep = document.querySelector(`#${formId} .form-step.active`);
+  if (lastStep && !validateStep(lastStep)) return;
+
   // Collect form data
   const data = {};
-  const formId = track === 'individual' ? 'formIndividual' : 'formSchool';
 
   // Gather all inputs
   document.querySelectorAll(`#${formId} input, #${formId} select, #${formId} textarea`).forEach(el => {
@@ -1894,6 +2219,8 @@ function submitForm(track) {
   });
 
   data.track = track;
+  data.tipo = 'manifestazione-interesse';
+  data.edizione = EDIZIONE.anno;
   data.timestamp = new Date().toISOString();
 
   // Disable submit button
