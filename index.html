@@ -730,6 +730,138 @@ section { padding: 8rem 3rem; position: relative; }
 }
 
 /* ======================== */
+/* PODCAST 2033             */
+/* ======================== */
+.podcast-section {
+  background: var(--black);
+  color: var(--white);
+  overflow: hidden;
+}
+.podcast-section .section-label { color: var(--accent3); }
+.podcast-section .section-label::before { background: var(--accent3); }
+.podcast-inner { max-width: 1100px; margin: 0 auto; }
+.podcast-section .section-title { color: var(--white); margin-bottom: 1.5rem; }
+.podcast-section .section-title em {
+  font-style: normal;
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  letter-spacing: -0.04em;
+}
+.podcast-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+.podcast-cover {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+}
+.podcast-cover img { display: block; width: 100%; height: auto; }
+.podcast-cover figcaption {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 2rem;
+  background: rgba(26,26,26,0.8);
+  backdrop-filter: blur(8px);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.podcast-cover figcaption .pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+.podcast-text p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.3rem;
+}
+.podcast-text p:last-of-type { margin-bottom: 0; }
+.podcast-text strong { color: var(--white); font-weight: 600; }
+.podcast-text .accent-txt { color: var(--accent3); font-weight: 500; }
+.podcast-episode {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.podcast-episode:hover {
+  border-color: rgba(255,61,0,0.5);
+  background: rgba(255,255,255,0.06);
+}
+.ep-meta { flex: 1; min-width: 200px; }
+.ep-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent3);
+  margin-bottom: 0.4rem;
+}
+.ep-title { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+.ep-dur {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 0.3rem;
+}
+.ep-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 3rem;
+  background: var(--accent);
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ep-play:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255,61,0,0.35);
+}
+.podcast-player {
+  margin-top: 3rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+  min-height: 200px;
+}
+.podcast-player iframe { display: block; width: 100%; height: 200px; border: 0; }
+.podcast-credits {
+  margin-top: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 2;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.4);
+}
+.podcast-credits a { color: rgba(255,255,255,0.65); text-decoration: none; border-bottom: 1px solid rgba(255,61,0,0.6); }
+.podcast-credits a:hover { color: var(--white); }
+
+/* ======================== */
 /* FORM SECTION             */
 /* ======================== */
 .form-section {
@@ -1340,6 +1472,8 @@ footer {
   .track-selector { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; }
   .criteria-grid { grid-template-columns: 1fr; }
+  .podcast-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .podcast-cover { max-width: 320px; }
 }
 </style>
 </head>
@@ -1358,6 +1492,7 @@ footer {
     <a href="#impara">Competenze</a>
     <a href="#selezione">Selezione</a>
     <a href="#festival">Festival</a>
+    <a href="#podcast">Il podcast</a>
     <a href="#candidati" class="nav-cta">Resta aggiornato</a>
   </div>
 </nav>
@@ -1399,8 +1534,8 @@ footer {
 <!-- MARQUEE -->
 <div class="marquee-section">
   <div class="marquee-track" id="marquee">
-    <span>Italian Podcast Awards <span class="dot"></span> Festival del Pensare Contemporaneo <span class="dot"></span> Piacenza 2026 <span class="dot"></span> Ascolto <span class="dot"></span> Voce <span class="dot"></span> Narrazione <span class="dot"></span> Redazione Live <span class="dot"></span> 14–25 anni <span class="dot"></span></span>
-    <span>Italian Podcast Awards <span class="dot"></span> Festival del Pensare Contemporaneo <span class="dot"></span> Piacenza 2026 <span class="dot"></span> Ascolto <span class="dot"></span> Voce <span class="dot"></span> Narrazione <span class="dot"></span> Redazione Live <span class="dot"></span> 14–25 anni <span class="dot"></span></span>
+    <span>Italian Podcast Awards <span class="dot"></span> Festival del Pensare Contemporaneo <span class="dot"></span> Piacenza 2026 <span class="dot"></span> Ascolto <span class="dot"></span> Voce <span class="dot"></span> Narrazione <span class="dot"></span> Redazione Live <span class="dot"></span> Il podcast 2033 <span class="dot"></span> 14–25 anni <span class="dot"></span></span>
+    <span>Italian Podcast Awards <span class="dot"></span> Festival del Pensare Contemporaneo <span class="dot"></span> Piacenza 2026 <span class="dot"></span> Ascolto <span class="dot"></span> Voce <span class="dot"></span> Narrazione <span class="dot"></span> Redazione Live <span class="dot"></span> Il podcast 2033 <span class="dot"></span> 14–25 anni <span class="dot"></span></span>
   </div>
 </div>
 
@@ -1645,6 +1780,9 @@ footer {
     <p class="section-text" style="margin-bottom:2rem;">
       Il lavoro dei partecipanti è parte integrante della narrazione pubblica dell'evento e viene valorizzato durante la serata degli Italian Podcast Awards, generando un dialogo diretto tra formazione, produzione culturale e professionisti del settore.
     </p>
+    <p class="section-text" style="margin-bottom:2rem;">
+      Non è un esercizio: la prima edizione dell'Academy ha prodotto <a href="#podcast" style="color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,61,0,0.4);"><strong>2033</strong></a>, un podcast pubblicato e presentato dal palco di piazza Cavalli.
+    </p>
     <div class="festival-stats">
       <div class="stat">
         <div class="stat-number">4</div>
@@ -1659,6 +1797,42 @@ footer {
         <div class="stat-label">Mesi di percorso</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- PODCAST 2033 -->
+<section class="podcast-section" id="podcast">
+  <div class="podcast-inner">
+    <div class="reveal">
+      <div class="section-label">Il podcast della redazione</div>
+      <h2 class="section-title">La prima redazione ha gi&agrave; un podcast: <em>2033</em></h2>
+    </div>
+    <div class="podcast-grid">
+      <figure class="podcast-cover reveal">
+        <img src="cover-2033.jpg" alt="Copertina del podcast 2033 &mdash; Voci dal Festival del Pensare Contemporaneo" width="899" height="900" loading="lazy">
+        <figcaption><span class="pulse"></span>In produzione</figcaption>
+      </figure>
+      <div class="podcast-text reveal">
+        <p><strong>2033</strong> &egrave; il podcast scritto, registrato e montato dai ragazzi e dalle ragazze dell'edizione 2026 dell'Academy, con la supervisione di <strong>Rossella Pivanti</strong>. 2033 &egrave; l'anno in cui Piacenza si candida a Capitale Europea della Cultura: il podcast chiede alla generazione che quell'anno lo abiter&agrave; da adulta di immaginarlo adesso, ad alta voce.</p>
+        <p>Il primo episodio, <span class="accent-txt">Nasciamo stasera</span>, &egrave; stato presentato dal vivo il <strong>23 settembre in piazza Cavalli</strong>, durante la serata degli Italian Podcast Awards, davanti alla citt&agrave; e ai protagonisti del podcasting italiano.</p>
+        <p>Da quella sera la redazione lavora sul campo: nelle quattro giornate del Festival del Pensare Contemporaneo (24&ndash;27 settembre) i partecipanti sono in giro per Piacenza con i registratori, a <strong>intervistare gli ospiti del Festival e il pubblico che li ascolta</strong>. Le voci raccolte diventano le puntate successive.</p>
+        <div class="podcast-episode">
+          <div class="ep-meta">
+            <div class="ep-label">Episodio 01 &middot; 24 settembre 2026</div>
+            <div class="ep-title">Nasciamo stasera</div>
+            <div class="ep-dur">8 min</div>
+          </div>
+          <a class="ep-play" href="https://www.spreaker.com/episode/nasciamo-stasera--75330335" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+            Ascolta l'episodio
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="podcast-player reveal">
+      <iframe src="https://widget.spreaker.com/player?show_id=7377542&amp;theme=light&amp;playlist=show&amp;playlist-continuous=false&amp;chapters-image=true&amp;episode_image_position=right&amp;hide-logo=true&amp;hide-likes=true&amp;hide-comments=true&amp;hide-sharing=false&amp;hide-download=true" title="Player del podcast 2033" loading="lazy" allow="autoplay"></iframe>
+    </div>
+    <p class="podcast-credits reveal">Un progetto di Rete Cultura Piacenza, nato dal dialogo tra Bottega XNL, Festival del Pensare Contemporaneo e Tlon, promosso da Comune di Piacenza e Fondazione di Piacenza e Vigevano, realizzato da Fondazione Teatri di Piacenza. &middot; <a href="https://www.spreaker.com/podcast/2033--7377542" target="_blank" rel="noopener">Segui 2033 su Spreaker &rarr;</a></p>
   </div>
 </section>
 
