@@ -793,12 +793,17 @@ section { padding: 8rem 3rem; position: relative; }
 .podcast-text p:last-of-type { margin-bottom: 0; }
 .podcast-text strong { color: var(--white); font-weight: 600; }
 .podcast-text .accent-txt { color: var(--accent3); font-weight: 500; }
+.podcast-episodes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 2.5rem;
+}
 .podcast-episode {
   display: flex;
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
-  margin-top: 2.5rem;
   padding: 1.5rem;
   border: 1px solid rgba(255,255,255,0.14);
   border-radius: 12px;
@@ -1554,17 +1559,32 @@ footer {
       <div class="podcast-text reveal">
         <p><strong>2033</strong> &egrave; il podcast scritto, registrato e montato dai ragazzi e dalle ragazze dell'edizione 2026 dell'Academy, con la supervisione di <strong>Rossella Pivanti</strong>. 2033 &egrave; l'anno in cui Piacenza si candida a Capitale Europea della Cultura: il podcast chiede alla generazione che quell'anno lo abiter&agrave; da adulta di immaginarlo adesso, ad alta voce.</p>
         <p>Il primo episodio, <span class="accent-txt">Nasciamo stasera</span>, &egrave; stato presentato dal vivo il <strong>23 settembre in piazza Cavalli</strong>, durante la serata degli Italian Podcast Awards, davanti alla citt&agrave; e ai protagonisti del podcasting italiano.</p>
-        <p>Da quella sera la redazione lavora sul campo: nelle quattro giornate del Festival del Pensare Contemporaneo (24&ndash;27 settembre) i partecipanti sono in giro per Piacenza con i registratori, a <strong>intervistare gli ospiti del Festival e il pubblico che li ascolta</strong>. Le voci raccolte diventano le puntate successive.</p>
-        <div class="podcast-episode">
-          <div class="ep-meta">
-            <div class="ep-label">Episodio 01 &middot; 24 settembre 2026</div>
-            <div class="ep-title">Nasciamo stasera</div>
-            <div class="ep-dur">8 min</div>
+        <p>Da quella sera la redazione lavora sul campo: nelle quattro giornate del Festival del Pensare Contemporaneo (24&ndash;27 settembre) i partecipanti sono in giro per Piacenza con i registratori, a <strong>intervistare gli ospiti del Festival e il pubblico che li ascolta</strong>, e rientrano al quartier generale a montare. Le voci raccolte diventano le puntate: nella seconda, <span class="accent-txt">Prime luci</span>, si sentono le interviste raccolte nel primo giorno.</p>
+        <!-- Le puntate si aggiornano da sole dall'API di Spreaker (vedi initEpisodi).
+             Quelle qui sotto restano come copia di sicurezza se la chiamata non risponde. -->
+        <div class="podcast-episodes" id="podcastEpisodes">
+          <div class="podcast-episode">
+            <div class="ep-meta">
+              <div class="ep-label">Episodio 01 &middot; 24 settembre 2026</div>
+              <div class="ep-title">Nasciamo stasera</div>
+              <div class="ep-dur">8 min</div>
+            </div>
+            <a class="ep-play" href="https://www.spreaker.com/episode/nasciamo-stasera--75330335" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+              Ascolta
+            </a>
           </div>
-          <a class="ep-play" href="https://www.spreaker.com/episode/nasciamo-stasera--75330335" target="_blank" rel="noopener">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
-            Ascolta l'episodio
-          </a>
+          <div class="podcast-episode">
+            <div class="ep-meta">
+              <div class="ep-label">Episodio 02 &middot; 25 settembre 2026</div>
+              <div class="ep-title">Prime luci</div>
+              <div class="ep-dur">11 min</div>
+            </div>
+            <a class="ep-play" href="https://www.spreaker.com/episode/prime-luci--75351032" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+              Ascolta
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -2585,6 +2605,53 @@ document.querySelectorAll('.stat-number').forEach(el => {
   const originalText = el.textContent;
   el.setAttribute('data-count', originalText);
 });
+
+// ===== PUNTATE DI «2033» =====
+// La redazione pubblica durante il Festival: la lista si aggiorna da sola
+// dall'API pubblica di Spreaker. Se la chiamata non risponde restano le
+// puntate scritte nell'HTML, così la sezione non è mai vuota.
+(function initEpisodi() {
+  const box = document.getElementById('podcastEpisodes');
+  if (!box) return;
+  const SHOW = '7377542';
+  const MESI = ['gennaio','febbraio','marzo','aprile','maggio','giugno',
+                'luglio','agosto','settembre','ottobre','novembre','dicembre'];
+
+  const dataIta = iso => {
+    const [d, t] = String(iso).split(' ');
+    const [a, m, g] = d.split('-').map(Number);
+    return Number(g) + ' ' + MESI[m - 1] + ' ' + a;
+  };
+  const minuti = ms => Math.max(1, Math.round(ms / 60000)) + ' min';
+  const pulisci = testo => {
+    const d = document.createElement('div');
+    d.textContent = testo;
+    return d.innerHTML;
+  };
+
+  fetch('https://api.spreaker.com/v2/shows/' + SHOW + '/episodes?limit=50')
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(j => {
+      const items = (j.response && j.response.items) || [];
+      if (!items.length) return;
+      items.sort((a, b) => String(a.published_at).localeCompare(String(b.published_at)));
+      box.innerHTML = items.map((e, i) => {
+        const n = String(i + 1).padStart(2, '0');
+        return '<div class="podcast-episode">' +
+                 '<div class="ep-meta">' +
+                   '<div class="ep-label">Episodio ' + n + ' &middot; ' + dataIta(e.published_at) + '</div>' +
+                   '<div class="ep-title">' + pulisci(e.title) + '</div>' +
+                   '<div class="ep-dur">' + minuti(e.duration) + '</div>' +
+                 '</div>' +
+                 '<a class="ep-play" href="' + encodeURI(e.site_url) + '" target="_blank" rel="noopener">' +
+                   '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>' +
+                   'Ascolta' +
+                 '</a>' +
+               '</div>';
+      }).join('');
+    })
+    .catch(() => { /* restano le puntate scritte nell'HTML */ });
+})();
 </script>
 </body>
 </html>
